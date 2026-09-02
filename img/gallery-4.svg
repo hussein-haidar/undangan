@@ -1,0 +1,13 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800">
+  <defs>
+    <linearGradient id="bg" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b3a3c9"/>
+      <stop offset="100%" stop-color="#8b76ab"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <circle cx="300" cy="360" r="90" fill="#fffdf9" opacity=".85"/>
+  <path d="M255 340a45 45 0 0 1 90 0m-90 10h90v22h-90z" fill="#8b76ab" opacity=".55"/>
+  <text x="300" y="520" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="#fffdf9" opacity=".9">Ganti dengan foto</text>
+  <text x="300" y="560" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="#fffdf9" opacity=".9">Prewedding 4</text>
+</svg>
