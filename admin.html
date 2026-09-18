@@ -280,7 +280,7 @@ tr:hover td{background:rgba(185,142,82,.04)}
 
         <!-- Comments -->
         <div class="tab-panel" id="panel-comments">
-            <button class="btn btn-gold btn-sm" id="btn-add-comment" style="margin-bottom:14px"><i class="fas fa-plus"></i> Tambah Ucapan</button>
+            <p style="font-size:.85rem;color:var(--brown-soft);margin-bottom:14px"><i class="fas fa-info-circle"></i> Admin hanya dapat mengedit atau menghapus ucapan. Ucapan baru hanya bisa ditambahkan oleh pengunjung website.</p>
             <div class="table-wrap"><table>
                 <thead><tr><th>Nama</th><th>Ucapan</th><th>Likes</th><th>Waktu</th><th>Aksi</th></tr></thead>
                 <tbody id="comment-tbody"></tbody>
@@ -419,7 +419,8 @@ tr:hover td{background:rgba(185,142,82,.04)}
         <h3 id="lagu-modal-title">Tambah Lagu</h3>
         <input type="hidden" id="lagu-edit-id">
         <div class="form-group"><label>Judul Lagu</label><input type="text" id="lagu-title" maxlength="100" placeholder="Judul lagu"></div>
-        <div class="form-group"><label>File Lagu</label><input type="text" id="lagu-file" maxlength="100" placeholder="Nama file (contoh: Sharia.mp3)"></div>
+        <div class="form-group"><label>Upload File MP3</label><input type="file" id="lagu-upload" accept=".mp3,audio/mpeg"></div>
+        <div class="form-group"><label>Atau URL Lagu</label><input type="url" id="lagu-url" maxlength="500" placeholder="https://example.com/lagu.mp3"></div>
         <div class="form-actions">
             <button class="btn btn-gold" id="btn-save-lagu"><i class="fas fa-save"></i> Simpan</button>
             <button class="btn btn-ghost" id="btn-cancel-lagu">Batal</button>
@@ -1019,10 +1020,10 @@ async function loadLagu() {
     }
     tbody.innerHTML = data.map(l => `<tr>
         <td><strong>${esc(l.title)}</strong></td>
-        <td>${esc(l.file_name)}</td>
+        <td style="font-size:.78rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(l.file_url || l.file_name || '-')}</td>
         <td style="font-size:.78rem;color:var(--brown-soft)">${waktuLalu(l.created_at)}</td>
         <td class="actions">
-            <button class="btn btn-ghost btn-sm" onclick="editLagu(${l.id},'${esc(l.title)}','${esc(l.file_name)}')"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-ghost btn-sm" onclick="editLagu(${l.id},'${esc(l.title)}','${esc(l.file_url || '')}','${esc(l.file_name || '')}')"><i class="fas fa-edit"></i></button>
             <button class="btn btn-red" onclick="deleteLagu(${l.id},'${esc(l.title)}')"><i class="fas fa-trash"></i></button>
         </td>
     </tr>`).join('');
@@ -1032,16 +1033,18 @@ $('#btn-add-lagu').onclick = () => {
     $('#lagu-modal-title').textContent = 'Tambah Lagu';
     $('#lagu-edit-id').value = '';
     $('#lagu-title').value = '';
-    $('#lagu-file').value = '';
+    $('#lagu-upload').value = '';
+    $('#lagu-url').value = '';
     $('#modal-lagu').classList.add('show');
     $('#lagu-title').focus();
 };
 
-window.editLagu = (id, title, file_name) => {
+window.editLagu = (id, title, file_url, file_name) => {
     $('#lagu-modal-title').textContent = 'Edit Lagu';
     $('#lagu-edit-id').value = id;
     $('#lagu-title').value = title;
-    $('#lagu-file').value = file_name;
+    $('#lagu-upload').value = '';
+    $('#lagu-url').value = file_url || '';
     $('#modal-lagu').classList.add('show');
     $('#lagu-title').focus();
 };
@@ -1049,19 +1052,56 @@ window.editLagu = (id, title, file_name) => {
 $('#btn-save-lagu').onclick = async () => {
     const id = $('#lagu-edit-id').value;
     const title = $('#lagu-title').value.trim();
-    const file = $('#lagu-file').value.trim();
+    const fileInput = $('#lagu-upload');
+    const urlInput = $('#lagu-url').value.trim();
+    
     if (!title) return showToast('Judul lagu wajib diisi');
-
+    if (!fileInput.files.length && !urlInput) return showToast('Upload file MP3 atau masukkan URL lagu');
+    
+    let fileName = '';
+    let fileUrl = urlInput;
+    
+    // Jika ada file upload, upload ke Supabase Storage
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        if (!file.type.includes('audio') && !file.name.endsWith('.mp3')) {
+            return showToast('Hanya file MP3 yang diperbolehkan');
+        }
+        
+        const ext = file.name.split('.').pop() || 'mp3';
+        const safeName = `${Date.now()}_${title.replace(/[^a-z0-9]/gi, '_')}.${ext}`;
+        
+        const { data, error } = await supabase.storage.from('lagu').upload(safeName, file, {
+            cacheControl: '3600',
+            upsert: false
+        });
+        
+        if (error) return showToast('Gagal upload file: ' + error.message);
+        fileName = safeName;
+        // Dapatkan public URL
+        const { data: urlData } = supabase.storage.from('lagu').getPublicUrl(safeName);
+        fileUrl = urlData.publicUrl;
+    }
+    
     if (id) {
-        const { error } = await db.from('lagu').update({ title, file_name: file }).eq('id', id);
+        const updateData = { title };
+        if (fileUrl) updateData.file_url = fileUrl;
+        if (fileName) updateData.file_name = fileName;
+        
+        const { error } = await db.from('lagu').update(updateData).eq('id', id);
         if (error) return showToast('Gagal update: ' + error.message);
         showToast('Lagu berhasil diupdate');
     } else {
-        const { error } = await db.from('lagu').insert({ title, file_name: file });
+        const { error } = await db.from('lagu').insert({ title, file_name: fileName, file_url: fileUrl });
         if (error) return showToast('Gagal tambah: ' + error.message);
         showToast('Lagu berhasil ditambahkan');
     }
     $('#modal-lagu').classList.remove('show');
+    // Reset form
+    $('#lagu-title').value = '';
+    $('#lagu-upload').value = '';
+    $('#lagu-url').value = '';
+    $('#lagu-edit-id').value = '';
     loadLagu();
 };
 
