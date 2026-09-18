@@ -273,7 +273,7 @@ tr:hover td{background:rgba(185,142,82,.04)}
 
         <!-- RSVP -->
         <div class="tab-panel active" id="panel-rsvps">
-            <button class="btn btn-gold btn-sm" id="btn-add-rsvp" style="margin-bottom:14px"><i class="fas fa-plus"></i> Tambah RSVP</button>
+            <p style="font-size:.85rem;color:var(--brown-soft);margin-bottom:14px"><i class="fas fa-info-circle"></i> Admin hanya dapat mengedit atau menghapus data RSVP. Tamu baru hanya bisa ditambahkan melalui formulir RSVP oleh pengunjung website.</p>
             <div class="table-wrap"><table>
                 <thead><tr><th>Nama</th><th>Status</th><th>Tamu</th><th>Waktu</th><th>Aksi</th></tr></thead>
                 <tbody id="rsvp-tbody"></tbody>
@@ -303,7 +303,7 @@ tr:hover td{background:rgba(185,142,82,.04)}
             <p style="font-size:.85rem;color:var(--brown-soft);margin-bottom:14px">Edit data wedding. Lokasi dapat dipilih dengan mengklik peta di bawah ini.</p>
             
             <!-- Akad Map -->
-            <div id="akad-map" style="height: 250px; width: 100%; border-radius: 8px; border: 1px solid rgba(185,142,82,.3); margin-bottom: 8px;"></div>
+            <div id="akad-map" style="height: 280px; width: 100%; border-radius: 8px; border: 1px solid rgba(185,142,82,.3); margin-bottom: 8px; overflow:hidden;"></div>
             <div class="form-row" style="align-items:flex-end;margin-bottom:16px">
                 <div class="form-group" style="margin:0;flex:1">
                     <label>Cari alamat Akad</label>
@@ -313,7 +313,7 @@ tr:hover td{background:rgba(185,142,82,.04)}
             </div>
 
             <!-- Resepsi Map -->
-            <div id="resepsi-map" style="height: 250px; width: 100%; border-radius: 8px; border: 1px solid rgba(185,142,82,.3); margin-bottom: 8px;"></div>
+            <div id="resepsi-map" style="height: 280px; width: 100%; border-radius: 8px; border: 1px solid rgba(185,142,82,.3); margin-bottom: 8px; overflow:hidden;"></div>
             <div class="form-row" style="align-items:flex-end;margin-bottom:16px">
                 <div class="form-group" style="margin:0;flex:1">
                     <label>Cari alamat Resepsi</label>
@@ -785,16 +785,6 @@ async function loadRsvps() {
         </td>
     </tr>`).join('');
 }
-
-$('#btn-add-rsvp').onclick = () => {
-    $('#rsvp-modal-title').textContent = 'Tambah RSVP';
-    $('#rsvp-edit-id').value = '';
-    $('#rsvp-name').value = '';
-    $('#rsvp-attendance').value = 'hadir';
-    $('#rsvp-guests').value = '1';
-    $('#modal-rsvp').classList.add('show');
-    $('#rsvp-name').focus();
-};
 
 window.editRsvp = (id, name, attendance, guests) => {
     $('#rsvp-modal-title').textContent = 'Edit RSVP';
