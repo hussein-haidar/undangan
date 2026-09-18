@@ -466,6 +466,9 @@ const $$ = s => [...document.querySelectorAll(s)];
 
 let currentAdmin = null;
 
+// Tunggu DOM siap sebelum menjalankan kode
+document.addEventListener('DOMContentLoaded', () => {
+
 function showToast(msg) {
     const t = $('#toast');
     t.textContent = msg;
@@ -1208,6 +1211,8 @@ $$('.tab-btn').forEach(btn => {
         }, 100);
     });
 });
+
+}); // End DOMContentLoaded
 </script>
 </body>
 </html>
