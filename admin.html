@@ -115,6 +115,8 @@ tr:hover td{background:rgba(185,142,82,.04)}
     .topbar-right{flex-wrap:wrap;justify-content:center}
 }
 </style>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
@@ -1071,7 +1073,7 @@ $('#btn-save-lagu').onclick = async () => {
         const ext = file.name.split('.').pop() || 'mp3';
         const safeName = `${Date.now()}_${title.replace(/[^a-z0-9]/gi, '_')}.${ext}`;
         
-        const { data, error } = await supabase.storage.from('lagu').upload(safeName, file, {
+        const { data, error } = await db.storage.from('lagu').upload(safeName, file, {
             cacheControl: '3600',
             upsert: false
         });
@@ -1079,7 +1081,7 @@ $('#btn-save-lagu').onclick = async () => {
         if (error) return showToast('Gagal upload file: ' + error.message);
         fileName = safeName;
         // Dapatkan public URL
-        const { data: urlData } = supabase.storage.from('lagu').getPublicUrl(safeName);
+        const { data: urlData } = db.storage.from('lagu').getPublicUrl(safeName);
         fileUrl = urlData.publicUrl;
     }
     
