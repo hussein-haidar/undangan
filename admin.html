@@ -1204,11 +1204,28 @@ $('#resepsi-search-btn').onclick = () => {
 $$('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         if (btn.dataset.tab !== 'settings') return;
+        // Tunggu hingga panel settings benar-benar terlihat
         setTimeout(() => {
-            if (typeof L === 'undefined') return;
-            if (!akadMap) initAkadMap(); else akadMap.invalidateSize();
-            if (!resepsiMap) initResepsiMap(); else resepsiMap.invalidateSize();
-        }, 100);
+            if (typeof L === 'undefined') {
+                console.error('Leaflet belum dimuat');
+                return;
+            }
+            // Cek apakah container maps ada di DOM
+            const akadContainer = document.getElementById('akad-map');
+            const resepsiContainer = document.getElementById('resepsi-map');
+            
+            if (akadContainer && !akadMap) {
+                initAkadMap();
+            } else if (akadMap) {
+                setTimeout(() => akadMap.invalidateSize(), 200);
+            }
+            
+            if (resepsiContainer && !resepsiMap) {
+                initResepsiMap();
+            } else if (resepsiMap) {
+                setTimeout(() => resepsiMap.invalidateSize(), 200);
+            }
+        }, 300);
     });
 });
 
