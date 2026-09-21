@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin â€” Undangan Pernikahan</title>
+<title>Admin - Undangan Pernikahan</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -360,6 +360,9 @@ tr:hover td{background:rgba(185,142,82,.04)}
 
         <!-- Lagu -->
         <div class="tab-panel" id="panel-lagu">
+            <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+                <button type="button" class="btn btn-gold" id="btn-add-lagu"><i class="fas fa-plus"></i> Tambah Manual</button>
+            </div>
             <div class="upload-area" id="lagu-upload-area">
                 <i class="fas fa-cloud-upload-alt"></i>
                 <p>Seret file MP3 ke sini atau <span id="lagu-file-trigger">klik untuk pilih</span></p>
@@ -425,26 +428,116 @@ tr:hover td{background:rgba(185,142,82,.04)}
         <!-- Settings -->
         <div class="tab-panel" id="panel-settings">
             <p style="font-size:.85rem;color:var(--brown-soft);margin-bottom:14px">Edit data wedding. Lokasi dapat dipilih dengan mengklik peta di bawah ini.</p>
-            
-<!-- Akad Map -->
-            <div id="akad-map" style="height: 280px; width: 100%; border-radius: 8px; border: 1px solid rgba(185,142,82,.3); margin-bottom: 8px; overflow:hidden;"></div>
-            <div class="form-row" style="align-items:flex-end;margin-bottom:16px">
-                <div class="form-group" style="margin:0;flex:1">
-                    <label>Cari alamat Akad</label>
-                    <input type="text" id="akad-address" placeholder="Ketik alamat lalu klik Cari">
+
+<div style="background:#fffdf9;border:1px solid rgba(185,142,82,.3);border-radius:14px;padding:14px;margin-bottom:18px">
+                <h4 style="margin:0 0 10px;color:var(--brown)"><i class="fas fa-toggle-on" style="color:var(--gold)"></i> Tampilkan Acara di Undangan</h4>
+                <p style="font-size:.8rem;color:var(--brown-soft);margin-bottom:10px">Centang acara yang tampil di undangan. Ramah Tamah hanya tampil jika tanggal &amp; jamnya diisi.</p>
+                <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--brown)">
+                    <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="show-akad" checked> Akad Nikah</label>
+                    <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="show-resepsi" checked> Resepsi</label>
+                    <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="show-ramah" checked> Ramah Tamah</label>
                 </div>
-                <button class="btn btn-ghost" id="akad-search-btn" style="height:42px"><i class="fas fa-search"></i> Cari</button>
             </div>
 
-<!-- Resepsi Map -->
-            <div id="resepsi-map" style="height: 280px; width: 100%; border-radius: 8px; border: 1px solid rgba(185,142,82,.3); margin-bottom: 8px; overflow:hidden;"></div>
-            <div class="form-row" style="align-items:flex-end;margin-bottom:16px">
-                <div class="form-group" style="margin:0;flex:1">
-                    <label>Cari alamat Resepsi</label>
-                    <input type="text" id="resepsi-address" placeholder="Ketik alamat lalu klik Cari">
+<!-- Lokasi Akad -->
+            <div style="background:#fffdf9;border:1px solid rgba(185,142,82,.3);border-radius:14px;padding:14px;margin-bottom:18px">
+                <h4 style="margin:0 0 10px;color:var(--brown)"><i class="fas fa-map-pin" style="color:var(--gold)"></i> Lokasi Akad</h4>
+                <div id="akad-map" style="height:250px;width:100%;border-radius:8px;border:1px solid rgba(185,142,82,.3);margin-bottom:10px"></div>
+                <div style="background:#f7f2e9;border-left:4px solid var(--gold);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:.85rem;color:var(--brown)">
+                    <b id="akad-info-name" style="display:block;color:var(--gold-dark)">Lokasi Akad</b>
+                    <span id="akad-info-address" style="display:block;margin:2px 0">Klik peta / seret marker untuk isi otomatis</span>
+                    <span id="akad-info-coords" style="font-family:monospace;font-size:.75rem;color:var(--brown-soft)"></span>
                 </div>
-                <button class="btn btn-ghost" id="resepsi-search-btn" style="height:42px"><i class="fas fa-search"></i> Cari</button>
+                <div class="form-row" style="margin-bottom:10px">
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Nama Lokasi</label>
+                        <input type="text" id="akad-tempat" data-field="akad.tempat" placeholder="Contoh: Kediaman Mempelai Pria">
+                    </div>
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Alamat</label>
+                        <input type="text" id="akad-alamat" data-field="akad.alamat" placeholder="Alamat lengkap lokasi">
+                    </div>
+                </div>
+                <div class="form-row" style="align-items:flex-end;margin:0">
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Cari alamat di peta</label>
+                        <input type="text" id="akad-address" placeholder="Ketik nama tempat / alamat lalu klik Cari">
+                    </div>
+                    <button class="btn btn-ghost" id="akad-search-btn" style="height:42px"><i class="fas fa-search"></i> Cari</button>
+                </div>
             </div>
+
+            <!-- Lokasi Resepsi -->
+            <div style="background:#fffdf9;border:1px solid rgba(185,142,82,.3);border-radius:14px;padding:14px;margin-bottom:18px">
+                <h4 style="margin:0 0 10px;color:var(--brown)"><i class="fas fa-map-pin" style="color:var(--gold)"></i> Lokasi Resepsi</h4>
+                <div id="resepsi-map" style="height:250px;width:100%;border-radius:8px;border:1px solid rgba(185,142,82,.3);margin-bottom:10px"></div>
+                <div style="background:#f7f2e9;border-left:4px solid var(--gold);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:.85rem;color:var(--brown)">
+                    <b id="resepsi-info-name" style="display:block;color:var(--gold-dark)">Lokasi Resepsi</b>
+                    <span id="resepsi-info-address" style="display:block;margin:2px 0">Klik peta / seret marker untuk isi otomatis</span>
+                    <span id="resepsi-info-coords" style="font-family:monospace;font-size:.75rem;color:var(--brown-soft)"></span>
+                </div>
+                <div class="form-row" style="margin-bottom:10px">
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Nama Lokasi</label>
+                        <input type="text" id="resepsi-tempat" data-field="resepsi.tempat" placeholder="Contoh: H.A Djunaid Convention Center">
+                    </div>
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Alamat</label>
+                        <input type="text" id="resepsi-alamat" data-field="resepsi.alamat" placeholder="Alamat lengkap lokasi">
+                    </div>
+                </div>
+                <div class="form-row" style="align-items:flex-end;margin:0">
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Cari alamat di peta</label>
+                        <input type="text" id="resepsi-address" placeholder="Ketik nama tempat / alamat lalu klik Cari">
+                    </div>
+                    <button class="btn btn-ghost" id="resepsi-search-btn" style="height:42px"><i class="fas fa-search"></i> Cari</button>
+                </div>
+            </div>
+
+            <!-- Lokasi Ramah Tamah -->
+            <div style="background:#fffdf9;border:1px solid rgba(185,142,82,.3);border-radius:14px;padding:14px;margin-bottom:18px">
+                <h4 style="margin:0 0 10px;color:var(--brown)"><i class="fas fa-coffee" style="color:var(--gold)"></i> Ramah Tamah</h4>
+                <div id="ramah-map" style="height:250px;width:100%;border-radius:8px;border:1px solid rgba(185,142,82,.3);margin-bottom:10px"></div>
+                <div style="background:#f7f2e9;border-left:4px solid var(--gold);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:.85rem;color:var(--brown)">
+                    <b id="ramah-info-name" style="display:block;color:var(--gold-dark)">Lokasi Ramah Tamah</b>
+                    <span id="ramah-info-address" style="display:block;margin:2px 0">Klik peta / seret marker untuk isi otomatis</span>
+                    <span id="ramah-info-coords" style="font-family:monospace;font-size:.75rem;color:var(--brown-soft)"></span>
+                </div>
+                <div class="form-row" style="margin-bottom:10px">
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Nama Lokasi</label>
+                        <input type="text" id="ramah-tempat" data-field="ramah_tamah.tempat" placeholder="Contoh: Kediaman Orang Tua Mempelai">
+                    </div>
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Alamat</label>
+                        <input type="text" id="ramah-alamat" data-field="ramah_tamah.alamat" placeholder="Alamat lengkap lokasi">
+                    </div>
+                </div>
+                <div class="form-row" style="margin-bottom:10px">
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Nama Acara</label>
+                        <input type="text" id="ramah-nama" data-field="ramah_tamah.nama" placeholder="Contoh: Ramah Tamah" maxlength="60">
+                    </div>
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Tanggal &amp; Jam (format: YYYY-MM-DD HH:MM:SS)</label>
+                        <input type="text" id="ramah-tanggal" data-field="ramah_tamah.tanggal_waktu" placeholder="2026-12-19 19:00:00">
+                    </div>
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Jam Tampil di Undangan</label>
+                        <input type="text" id="ramah-jam" data-field="ramah_tamah.waktu_display" placeholder="Contoh: 19.00 WIB">
+                    </div>
+                </div>
+                <div class="form-row" style="align-items:flex-end;margin:0">
+                    <div class="form-group" style="margin:0;flex:1">
+                        <label>Cari alamat di peta</label>
+                        <input type="text" id="ramah-address" placeholder="Ketik nama tempat / alamat lalu klik Cari">
+                    </div>
+                    <button class="btn btn-ghost" id="ramah-search-btn" style="height:42px"><i class="fas fa-search"></i> Cari</button>
+                </div>
+            </div>
+
+            <p style="font-size:.85rem;color:var(--brown-soft);margin-bottom:14px;margin-top:20px">Jika acara Ramah Tamah tidak dibutuhkan, hapus/tanpa isi Tanggal &amp; Jam pada seksi di atas agar kartunya tidak tampil di undangan.</p>
 
             <p style="font-size:.85rem;color:var(--brown-soft);margin-bottom:14px;margin-top:20px">Edit data wedding dalam format JSON. Setelah disimpan, perubahan langsung terlihat di website.</p>
             <textarea class="json-editor" id="json-editor" spellcheck="false"></textarea>
@@ -743,7 +836,7 @@ $('#show-register').onclick = e => { e.preventDefault(); showScreen('screen-regi
 $('#show-forgot').onclick = e => { e.preventDefault(); showScreen('screen-forgot'); };
 $('#back-login').onclick = e => { e.preventDefault(); showScreen('screen-login'); };
 $('#logout-btn').onclick = () => {
-    localStorage.removeItem('wedding_admin');
+    clearSession();
     currentAdmin = null;
     showScreen('screen-login');
     showToast('Berhasil logout');
@@ -779,6 +872,7 @@ $('#reg-btn').onclick = async () => {
 
     currentAdmin = data;
     localStorage.setItem('wedding_admin', JSON.stringify(data));
+    setSessionExp();
     showToast('Akun berhasil dibuat! Selamat datang, ' + name);
     enterAdmin(data);
 };
@@ -832,21 +926,58 @@ async function doLogin() {
 
     currentAdmin = data;
     localStorage.setItem('wedding_admin', JSON.stringify(data));
+    setSessionExp();
     showToast('Selamat datang, ' + data.name + '!');
     enterAdmin(data);
 }
 
 /* =====================================================
-   AUTO LOGIN (session)
+   AUTO LOGIN (session) + AUTO-LOGOUT (idle timeout)
    ===================================================== */
+const SESSION_IDLE_MS = 30 * 60 * 1000; // logout otomatis setelah 30 menit tanpa aktivitas
+const SESSION_EXP_KEY = 'wedding_admin_exp';
+
+function setSessionExp() {
+    localStorage.setItem(SESSION_EXP_KEY, String(Date.now() + SESSION_IDLE_MS));
+}
+function clearSession() {
+    localStorage.removeItem('wedding_admin');
+    localStorage.removeItem(SESSION_EXP_KEY);
+}
+function doIdleLogout() {
+    clearSession();
+    currentAdmin = null;
+    showScreen('screen-login');
+    showToast('Sesi berakhir karena tidak ada aktivitas. Silakan login kembali.');
+}
+
+let idleTimer = null;
+let lastActivityAt = 0;
+function onActivity() {
+    if (!currentAdmin) return;
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(doIdleLogout, SESSION_IDLE_MS);
+    const now = Date.now();
+    if (now - lastActivityAt > 10000) { lastActivityAt = now; setSessionExp(); }
+}
+['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(ev =>
+    document.addEventListener(ev, onActivity, { passive: true })
+);
+
 (function autoLogin() {
     const saved = localStorage.getItem('wedding_admin');
     if (saved) {
         try {
-            currentAdmin = JSON.parse(saved);
-            showScreen('screen-admin');
-            enterAdmin(currentAdmin);
-        } catch { localStorage.removeItem('wedding_admin'); }
+            const exp = Number(localStorage.getItem(SESSION_EXP_KEY)) || 0;
+            if (exp > Date.now()) {
+                currentAdmin = JSON.parse(saved);
+                showScreen('screen-admin');
+                enterAdmin(currentAdmin);
+                setSessionExp();
+            } else {
+                clearSession(); // sesi kedaluwarsa -> tetap di layar login
+            }
+        } catch { clearSession(); }
     }
 })();
 
@@ -1130,7 +1261,33 @@ function syncLocationFields() {
     if ($('#akad-info-address')) { $('#akad-info-address').textContent = getEditorField('akad.alamat') || ''; }
     if ($('#resepsi-info-name')) { $('#resepsi-info-name').textContent = getEditorField('resepsi.tempat') || 'Lokasi Resepsi'; }
     if ($('#resepsi-info-address')) { $('#resepsi-info-address').textContent = getEditorField('resepsi.alamat') || ''; }
+    if ($('#ramah-info-name')) { $('#ramah-info-name').textContent = getEditorField('ramah_tamah.tempat') || 'Lokasi Ramah Tamah'; }
+    if ($('#ramah-info-address')) { $('#ramah-info-address').textContent = getEditorField('ramah_tamah.alamat') || ''; }
+    syncShowFields();
 }
+
+// Binding field manual Ramah Tamah (nama/tanggal/jam) -> JSON editor
+const bindManualField = (id, path) => {
+    const el = $('#' + id);
+    if (el) el.addEventListener('input', () => setEditorField(path, el.value));
+};
+bindManualField('ramah-nama', 'ramah_tamah.nama');
+bindManualField('ramah-tanggal', 'ramah_tamah.tanggal_waktu');
+bindManualField('ramah-jam', 'ramah_tamah.waktu_display');
+
+// Tampilkan Acara — checkbox -> JSON (''show.akad'', ''show.resepsi'', ''show.ramah_tamah'')
+const syncShowFields = () => {
+    [{ id: 'show-akad', path: 'show.akad' }, { id: 'show-resepsi', path: 'show.resepsi' }, { id: 'show-ramah', path: 'show.ramah_tamah' }].forEach(f => {
+        const el = $('#' + f.id);
+        if (!el) return;
+        const val = getEditorField(f.path);
+        el.checked = val === undefined || val === null || val === true;
+    });
+};
+[{ id: 'show-akad', path: 'show.akad' }, { id: 'show-resepsi', path: 'show.resepsi' }, { id: 'show-ramah', path: 'show.ramah_tamah' }].forEach(f => {
+    const el = $('#' + f.id);
+    if (el) el.addEventListener('change', () => setEditorField(f.path, el.checked));
+});
 
 $('#btn-save-settings').onclick = async () => {
     const raw = $('#json-editor').value;
@@ -1193,6 +1350,7 @@ $('#btn-save-profile').onclick = async () => {
     currentAdmin.name = name;
     currentAdmin.phone = phone;
     localStorage.setItem('wedding_admin', JSON.stringify(currentAdmin));
+    setSessionExp();
     loadProfile();
     showToast('Profil berhasil diupdate');
 };
@@ -1215,6 +1373,7 @@ $('#btn-save-pass').onclick = async () => {
 
     currentAdmin.password_hash = newHash;
     localStorage.setItem('wedding_admin', JSON.stringify(currentAdmin));
+    setSessionExp();
     $('#prof-old-pass').value = '';
     $('#prof-new-pass').value = '';
     $('#prof-new-pass2').value = '';
@@ -1514,9 +1673,9 @@ $$('.tab-btn').forEach(btn => {
 });
 
 // Initialize Map Pickers
-let akadMap = null, resepsiMap = null;
-let mapObjs = { akad: null, resepsi: null };
-let searchDebounce = { akad: null, resepsi: null };
+let akadMap = null, resepsiMap = null, ramahMap = null;
+let mapObjs = { akad: null, resepsi: null, ramah: null };
+let searchDebounce = { akad: null, resepsi: null, ramah: null };
 
 function setEditorField(path, value) {
     try {
@@ -1546,7 +1705,7 @@ function getEditorField(path) {
 }
 
 function initMap(mapId, label, latPath, lngPath, tempatPath, alamatPath) {
-    const id = label.toLowerCase(); // 'akad' | 'resepsi'
+    const id = mapId.slice(0, -4); // 'akad' | 'resepsi' | 'ramah' (buang akhiran '-map')
     const defaultLat = -6.911521, defaultLng = 109.649375;
     const map = L.map(mapId).setView([defaultLat, defaultLng], 15);
 
@@ -1643,7 +1802,14 @@ function initResepsiMap() {
     resepsiMap = mapObjs.resepsi.map;
 }
 
-async function searchAndPlace(inputId, latPath, lngPath, label) {
+function initRamahMap() {
+    if (ramahMap) { ramahMap.invalidateSize(); return; }
+    mapObjs.ramah = initMap('ramah-map', 'Ramah Tamah', 'ramah_tamah.lat', 'ramah_tamah.lng', 'ramah_tamah.tempat', 'ramah_tamah.alamat');
+    ramahMap = mapObjs.ramah.map;
+}
+
+async function searchAndPlace(inputId, latPath, lngPath, key) {
+    const mapLabel = { akad: 'Akad', resepsi: 'Resepsi', ramah: 'Ramah Tamah' }[key] || key;
     const address = $('#' + inputId).value.trim();
     if (!address) return showToast('Masukkan alamat terlebih dahulu');
 
@@ -1656,16 +1822,18 @@ async function searchAndPlace(inputId, latPath, lngPath, label) {
             const data = await res.json();
             if (data?.length) {
                 const lat = parseFloat(data[0].lat), lng = parseFloat(data[0].lon);
-                if (label === 'Akad') initAkadMap(); else initResepsiMap();
-                const ctrl = label === 'Akad' ? mapObjs.akad : mapObjs.resepsi;
-                if (ctrl) { ctrl.map.setView([lat, lng], 16); ctrl.update(lat, lng); showToast(`${label}: ${data[0].display_name.substring(0, 60)}...`); }
+                const initers = { akad: initAkadMap, resepsi: initResepsiMap, ramah: initRamahMap };
+                (initers[key] || (() => {}))();
+                const ctrl = mapObjs[key];
+                if (ctrl) { ctrl.map.setView([lat, lng], 16); ctrl.update(lat, lng); showToast(`${mapLabel}: ${data[0].display_name.substring(0, 60)}...`); }
             } else showToast('Alamat tidak ditemukan');
         } catch { showToast('Gagal mencari alamat'); }
     }, 300);
 }
 
-$('#akad-search-btn').onclick = () => searchAndPlace('akad-address', 'akad.lat', 'akad.lng', 'Akad');
-$('#resepsi-search-btn').onclick = () => searchAndPlace('resepsi-address', 'resepsi.latitude', 'resepsi.longitude', 'Resepsi');
+$('#akad-search-btn').onclick = () => searchAndPlace('akad-address', 'akad.lat', 'akad.lng', 'akad');
+$('#resepsi-search-btn').onclick = () => searchAndPlace('resepsi-address', 'resepsi.latitude', 'resepsi.longitude', 'resepsi');
+$('#ramah-search-btn').onclick = () => searchAndPlace('ramah-address', 'ramah_tamah.lat', 'ramah_tamah.lng', 'ramah');
 
 // Debounced input search
 $('#akad-address').addEventListener('input', () => {
@@ -1684,6 +1852,14 @@ $('#resepsi-address').addEventListener('input', () => {
         }
     }, 500);
 });
+$('#ramah-address').addEventListener('input', () => {
+    clearTimeout(searchDebounce.ramah);
+    searchDebounce.ramah = setTimeout(() => {
+        if ($('#ramah-address').value.length > 3) {
+            $('#ramah-search-btn').click();
+        }
+    }, 500);
+});
 
 // Inisialisasi peta saat tab Settings dibuka (agar ukurannya terhitung)
 $$('.tab-btn').forEach(btn => {
@@ -1698,6 +1874,7 @@ if (typeof L === 'undefined') {
             // Cek apakah container maps ada di DOM
             const akadContainer = document.getElementById('akad-map');
             const resepsiContainer = document.getElementById('resepsi-map');
+            const ramahContainer = document.getElementById('ramah-map');
             
             if (akadContainer && !akadMap) {
                 initAkadMap();
@@ -1709,6 +1886,12 @@ if (typeof L === 'undefined') {
                 initResepsiMap();
             } else if (resepsiMap) {
                 setTimeout(() => resepsiMap.invalidateSize(), 200);
+            }
+            
+            if (ramahContainer && !ramahMap) {
+                initRamahMap();
+            } else if (ramahMap) {
+                setTimeout(() => ramahMap.invalidateSize(), 200);
             }
         }, 300);
     });

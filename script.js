@@ -636,6 +636,35 @@ function populateHTML(w) {
     const akadEnd    = new Date(new Date(w.akad.tanggal_waktu.replace(' ', 'T') + '+07:00').getTime() + 2 * 3600000).toISOString().replace('.000Z', '');
     const resepsiEnd = new Date(new Date(w.resepsi.tanggal_waktu.replace(' ', 'T') + '+07:00').getTime() + 3 * 3600000).toISOString().replace('.000Z', '');
 
+    // Acara opsional: Ramah Tamah (tampil hanya jika datanya terisi)
+    let extraAcara = '';
+    if (w.ramah_tamah && w.ramah_tamah.tanggal_waktu) {
+        const r = w.ramah_tamah;
+        const rtNama = r.nama || 'Ramah Tamah';
+        const rtEnd = new Date(new Date(r.tanggal_waktu.replace(' ', 'T') + '+07:00').getTime() + 2 * 3600000).toISOString().replace('.000Z', '');
+        const rtLat = r.lat || '', rtLng = r.lng || '';
+        const rtMapsUrl = rtLat && rtLng
+            ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(rtLat)},${encodeURIComponent(rtLng)}`
+            : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.maps_query || r.tempat || '')}`;
+        extraAcara = `
+        <div class="event-card reveal">
+            <div class="event-icon"><i class="fas fa-coffee"></i></div>
+            <h3>${esc(rtNama)}</h3>
+            <p class="event-date"><i class="far fa-calendar-alt"></i> ${esc(tanggalIndo(r.tanggal_waktu))}</p>
+            <p><i class="far fa-clock"></i> ${esc(r.waktu_display || '')}</p>
+            <p><i class="fas fa-map-marker-alt"></i> ${esc(r.tempat || '-')}<br><small>${esc(r.alamat || '')}</small></p>
+            <div class="event-actions">
+                <a class="btn-outline" target="_blank" rel="noopener" href="${rtMapsUrl}">
+                    <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
+                </a>
+                <a class="btn-outline" target="_blank" rel="noopener"
+                   href="${esc(gcalUrl(rtNama + ' ' + gp + ' & ' + bp, r.tanggal_waktu, rtEnd, r.tempat || ''))}">
+                    <i class="far fa-calendar-plus"></i> Simpan Kalender
+                </a>
+            </div>
+        </div>`;
+    }
+
     // Generate maps URLs from lat/lng if available, fallback to maps_query/maps_embed
     const akadMapsQuery = w.akad.maps_query || '';
     const akadLat = w.akad.lat || '';
@@ -651,7 +680,10 @@ function populateHTML(w) {
         ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resepsiLat)},${encodeURIComponent(resepsiLng)}`
         : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(w.resepsi.tempat)}`;
 
-    $('#event-grid').innerHTML = `
+    const showAkad = w.show?.akad !== false;
+    const showResepsi = w.show?.resepsi !== false;
+    let eventCards = '';
+    if (showAkad) eventCards += `
         <div class="event-card reveal">
             <div class="event-icon"><i class="fas fa-ring"></i></div>
             <h3>Akad Nikah</h3>
@@ -667,7 +699,8 @@ function populateHTML(w) {
                     <i class="far fa-calendar-plus"></i> Simpan Kalender
                 </a>
             </div>
-        </div>
+        </div>`;
+    if (showResepsi) eventCards += `
         <div class="event-card reveal">
             <div class="event-icon"><i class="fas fa-glass-cheers"></i></div>
             <h3>Resepsi</h3>
@@ -684,6 +717,8 @@ function populateHTML(w) {
                 </a>
             </div>
         </div>`;
+    if ((w.show?.ramah_tamah !== false) && extraAcara) eventCards += extraAcara;
+    $('#event-grid').innerHTML = eventCards;
 
     // Galeri (dengan fallback gradient kalau foto belum tersedia / nama salah)
     $('#gallery-grid').innerHTML = w.galeri.map(src => {
