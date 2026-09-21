@@ -1,53 +1,40 @@
-<!DOCTYPE html>
-<html lang="id">
+﻿<!DOCTYPE html>
+<html lang="id" data-tema="royal-gold"
+      data-gaya-font="classic" data-gaya-ornament="dove" data-gaya-shape="soft"
+      data-gaya-cover="center" data-gaya-texture="plain">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Undangan pernikahan Nito & Lusi">
-<title>Nito &amp; Lusi</title>
+<title>Nito &amp; Lusi â€” Royal Gold</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&family=Marcellus&family=Jost:wght@300;400;500;600&family=Lato:wght@300;400;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="css/font-awesome.min.css?v=20260628c">
-<link rel="stylesheet" href="style.css?v=20260628c">
-
-<noscript>
-<style>
-    #cover, #btn-music, #navbar { display: none !important; }
-    body.locked { overflow: auto; }
-    .reveal { opacity: 1; transform: none; }
-</style>
-</noscript>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&family=Marcellus&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/font-awesome.min.css">
+<link rel="stylesheet" href="../style.css">
 </head>
 <body class="locked">
 
-<!-- ================= COVER / AMPLOP DIGITAL ================= -->
+<!-- ================= COVER ================= -->
 <div id="cover" class="cover" role="dialog" aria-label="Cover undangan">
     <div class="cover-inner">
         <div class="cover-ornament"><i class="fas fa-dove"></i></div>
         <p class="cover-label">The Wedding Of</p>
-        <h1 class="cover-names"><span id="cv-groom"></span> <span>&amp;</span> <span id="cv-bride"></span></h1>
-        <p class="cover-date" id="cv-date"></p>
-
-        <div class="cover-guest" id="cover-guest" hidden>
+        <h1 class="cover-names">Nito <span>&amp;</span> Lusi</h1>
+        <p class="cover-date">19 Desember 2026</p>
+        <div class="cover-guest" id="cover-guest">
             <span>Kepada Yth.</span>
-            <strong id="cv-guest-name"></strong>
+            <strong id="cv-guest-name">Bpk/Ibu/Sdr/i</strong>
         </div>
-
-        <button id="btn-open" class="btn-gold" type="button">
-            <i class="far fa-envelope-open"></i> Buka Undangan
-        </button>
+        <button id="btn-open" class="btn-gold" type="button"><i class="far fa-envelope-open"></i> Buka Undangan</button>
     </div>
 </div>
 
-<!-- ================= TOMBOL MUSIK ================= -->
-<button id="btn-music" class="music-btn" type="button" aria-label="Putar / jeda musik" hidden>
-    <i class="fas fa-music"></i>
-</button>
-<audio id="bg-music" loop src="Shania.mp3"></audio>
+<!-- ================= MUSIK ================= -->
+<button id="btn-music" class="music-btn" type="button" aria-label="Putar / jeda musik" hidden><i class="fas fa-music"></i></button>
+<audio id="bg-music" loop src="../Shania.mp3"></audio>
 
 <!-- ================= NAVBAR BAWAH ================= -->
 <nav id="navbar" class="navbar-bottom" hidden>
@@ -65,11 +52,10 @@
     <div class="hero-ornament top-left"></div>
     <div class="hero-ornament bottom-right"></div>
     <p class="eyebrow reveal">The Wedding Of</p>
-    <h1 class="couple-script reveal"><span id="hero-groom"></span> <span>&amp;</span> <span id="hero-bride"></span></h1>
+    <h1 class="couple-script reveal">Nito <span>&amp;</span> Lusi</h1>
     <div class="divider reveal"><i class="fas fa-heart"></i></div>
-    <p class="hero-date reveal" id="hero-date"></p>
+    <p class="hero-date reveal">19 Desember 2026</p>
 
-    <!-- Countdown -->
     <div id="countdown" class="countdown reveal" data-target="">
         <div class="cd-box"><b id="cd-days">--</b><small>Hari</small></div>
         <div class="cd-box"><b id="cd-hours">--</b><small>Jam</small></div>
@@ -95,12 +81,12 @@
     <div class="couple-grid">
         <div class="couple-card reveal">
             <div class="photo-ring">
-                <img id="groom-foto" src="" alt="Foto Mempelai Pria">
+                <img id="groom-foto" src="../img/avatar-groom.svg" alt="Foto Mempelai Pria">
             </div>
-            <h3 class="couple-name" id="groom-nama"></h3>
-            <p class="parents">Putra dari<br><span id="groom-orangtua"></span></p>
-            <a class="ig-link" id="groom-ig" href="#" target="_blank" rel="noopener">
-                <i class="fab fa-instagram"></i> <span id="groom-ig-text"></span>
+            <h3 class="couple-name" id="groom-nama">Nito Mahendra Putra</h3>
+            <p class="parents">Putra dari<br><span id="groom-orangtua">Bpk. H. Ahmad &amp; Ibu Hj. Sri</span></p>
+            <a class="ig-link" href="#" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i> <span id="groom-ig-text">@nitomp</span>
             </a>
         </div>
 
@@ -108,12 +94,12 @@
 
         <div class="couple-card reveal">
             <div class="photo-ring">
-                <img id="bride-foto" src="" alt="Foto Mempelai Wanita">
+                <img id="bride-foto" src="../img/avatar-bride.svg" alt="Foto Mempelai Wanita">
             </div>
-            <h3 class="couple-name" id="bride-nama"></h3>
-            <p class="parents">Putri dari<br><span id="bride-orangtua"></span></p>
-            <a class="ig-link" id="bride-ig" href="#" target="_blank" rel="noopener">
-                <i class="fab fa-instagram"></i> <span id="bride-ig-text"></span>
+            <h3 class="couple-name" id="bride-nama">Lusi Aulia Rahma</h3>
+            <p class="parents">Putri dari<br><span id="bride-orangtua">Bpk. Drs. Bambang &amp; Ibu Dra. Ratna</span></p>
+            <a class="ig-link" href="#" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i> <span id="bride-ig-text">@lusiaulia</span>
             </a>
         </div>
     </div>
@@ -127,12 +113,26 @@
     </div>
 
     <div class="event-grid" id="event-grid">
-        <!-- Diisi oleh JS -->
+        <div class="event-card reveal">
+            <div class="event-icon"><i class="fas fa-ring"></i></div>
+            <h3>Akad Nikah</h3>
+            <p class="event-date">Sabtu, 19 Desember 2026</p>
+            <p>08.00 - 10.00 WIB<br>Masjid Agung An-Nur<br><small>Jl. Gajah Mada No. 12</small></p>
+            <a class="btn-outline" href="https://maps.google.com/?q=Masjid+Agung+An-Nur" target="_blank" rel="noopener">
+                <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
+            </a>
+        </div>
+        <div class="event-card reveal">
+            <div class="event-icon"><i class="fas fa-glass-cheers"></i></div>
+            <h3>Resepsi</h3>
+            <p class="event-date">Sabtu, 19 Desember 2026</p>
+            <p>11.00 - 15.00 WIB<br>Ballroom Hotel Santika<br><small>Jl. Pemuda No. 45</small></p>
+            <a class="btn-outline" href="https://maps.google.com/?q=Hotel+Santika" target="_blank" rel="noopener">
+                <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
+            </a>
+        </div>
     </div>
 
-<div class="maps-wrap reveal" style="overflow:hidden;border-radius:var(--radius);">
-        <iframe id="maps-embed" src="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi acara" style="pointer-events:none;"></iframe>
-    </div>
     <div class="dresscode reveal">
         <h3><i class="fas fa-tshirt"></i> Dress Code</h3>
         <p>Mohon mengenakan pakaian bertema warna berikut:</p>
@@ -176,7 +176,7 @@
                 <div class="tl-card">
                     <time>19 Desember 2026</time>
                     <h4>Hari Bahagia</h4>
-                    <p>Mengikat janji suci menuju hidup bersama selamanya — dan Anda adalah bagian pentingnya.</p>
+                    <p>Mengikat janji suci menuju hidup bersama selamanya â€” dan Anda adalah bagian pentingnya.</p>
                 </div>
             </div>
         </div>
@@ -190,11 +190,16 @@
         <h2>Momen Bahagia</h2>
     </div>
     <div class="gallery-grid" id="gallery-grid">
-        <!-- Diisi oleh JS -->
+        <figure class="gallery-item reveal"><img src="../img/gallery-1.svg" alt="Galeri 1"></figure>
+        <figure class="gallery-item reveal"><img src="../img/gallery-2.svg" alt="Galeri 2"></figure>
+        <figure class="gallery-item reveal"><img src="../img/gallery-3.svg" alt="Galeri 3"></figure>
+        <figure class="gallery-item reveal"><img src="../img/gallery-4.svg" alt="Galeri 4"></figure>
+        <figure class="gallery-item reveal"><img src="../img/gallery-5.svg" alt="Galeri 5"></figure>
+        <figure class="gallery-item reveal"><img src="../img/gallery-6.svg" alt="Galeri 6"></figure>
     </div>
 </section>
 
-<!-- ================= KADO / AMPLOP DIGITAL ================= -->
+<!-- ================= HADIAH ================= -->
 <section id="hadiah" class="section section-alt">
     <div class="section-head reveal">
         <p class="eyebrow">Wedding Gift</p>
@@ -203,16 +208,27 @@
     </div>
 
     <div class="gift-grid" id="gift-grid">
-        <!-- Diisi oleh JS -->
+        <div class="gift-card reveal">
+            <div class="gift-bank">BCA</div>
+            <div class="gift-norek">1234567890</div>
+            <p class="gift-aname">a.n. Nito Mahendra</p>
+            <button type="button" class="btn-gold btn-copy" data-copy="1234567890"><i class="far fa-copy"></i> Salin Nomor</button>
+        </div>
+        <div class="gift-card reveal">
+            <div class="gift-bank">Mandiri</div>
+            <div class="gift-norek">9876543210</div>
+            <p class="gift-aname">a.n. Lusi Aulia</p>
+            <button type="button" class="btn-gold btn-copy" data-copy="9876543210"><i class="far fa-copy"></i> Salin Nomor</button>
+        </div>
     </div>
 
     <div class="kado-fisik reveal">
         <i class="fas fa-gift"></i>
-        <p><strong>Kirim kado fisik?</strong><br><span id="kado-alamat"></span></p>
+        <p><strong>Kirim kado fisik?</strong><br><span id="kado-alamat">Jl. Melati No. 21, Jakarta</span></p>
     </div>
 </section>
 
-<!-- ================= RSVP & UCAPAN ================= -->
+<!-- ================= UCAPAN ================= -->
 <section id="ucapan" class="section">
     <div class="section-head reveal">
         <p class="eyebrow">RSVP &amp; Wishes</p>
@@ -237,7 +253,7 @@
                 </select>
                 <label>Status Kehadiran</label>
                 <select name="attendance" required>
-                    <option value="" disabled selected>Pilih status…</option>
+                    <option value="" disabled selected>Pilih statusâ€¦</option>
                     <option value="hadir">Hadir</option>
                     <option value="tidak_hadir">Tidak Hadir</option>
                     <option value="ragu">Masih Ragu</option>
@@ -256,8 +272,10 @@
             <h3><i class="fas fa-praying-hands"></i> Ucapan &amp; Doa</h3>
             <form id="form-ucapan">
                 <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
-                <input type="text" name="name" maxlength="100" placeholder="Nama Anda" required>
-                <textarea name="message" maxlength="500" rows="4" placeholder="Tulis ucapan & doa…" required></textarea>
+                <label>Nama Anda</label>
+                <input type="text" name="name" maxlength="100" placeholder="Nama lengkap" required>
+                <label>Ucapan &amp; Doa</label>
+                <textarea name="message" maxlength="500" rows="4" placeholder="Tulis ucapan & doaâ€¦" required></textarea>
                 <button type="submit" class="btn-gold" id="btn-ucapan"><i class="far fa-paper-plane"></i> Kirim Ucapan</button>
             </form>
             <div id="ucapan-list" class="ucapan-list" aria-live="polite"></div>
@@ -270,7 +288,7 @@
 </section>
 
 <footer class="footer">
-    <p class="couple-script small"><span id="ft-groom"></span> &amp; <span id="ft-bride"></span></p>
+    <p class="couple-script small"><span id="ft-groom">Nito</span> &amp; <span id="ft-bride">Lusi</span></p>
     <p>Terima kasih atas doa dan restu Anda</p>
     <small>&copy; 2026 Undangan Pernikahan Online</small>
 </footer>
@@ -288,8 +306,7 @@
 <!-- ================= TOAST ================= -->
 <div id="toast" class="toast" role="status"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="themes.js?v=20260628c"></script>
-<script src="script.js?v=20260628c"></script>
+<script src="../themes.js"></script>
+<script src="../script.js"></script>
 </body>
 </html>

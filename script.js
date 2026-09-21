@@ -24,6 +24,90 @@ if (!window.supabase) {
 }
 
 /* =====================================================
+   TEMA UNDANGAN
+   Menerapkan CSS variables dari tema terpilih (settings.tema).
+   Tema bawaan ada di themes.js, tema kustom disimpan di settings.
+   ===================================================== */
+
+function resolveWeddingTheme(cfg) {
+    const builtins = window.WEDDING_THEMES || {};
+    const kustom  = (cfg && Array.isArray(cfg.kustom)) ? cfg.kustom : [];
+    const aktif   = (cfg && cfg.aktif) || 'royal-gold';
+
+    const custom = kustom.find(t => t && t.id === aktif && t.vars);
+    if (custom) return { id: custom.id, vars: custom.vars, gaya: custom.gaya };
+    if (builtins[aktif]) return { id: aktif, vars: builtins[aktif].vars, gaya: builtins[aktif].gaya };
+    return null;
+}
+
+const DEFAULT_GAYA = { font: 'classic', ornament: 'dove', shape: 'soft', cover: 'center', texture: 'plain', layout: 'klasik' };
+const GAYA_ATTRS   = ['font', 'ornament', 'shape', 'cover', 'texture', 'layout'];
+
+/* =====================================================
+   SKEMA SUSUNAN HALAMAN (LAYOUT)
+   Setiap skema mengatur ULANG urutan seksi di <main> —
+   bukan sekadar gaya CSS, tapi komposisi halaman yang
+   benar-benar berbeda antar tema.
+   ===================================================== */
+const LAYOUT_SKEMA = {
+    /* urut tampil seksi (id elemen <section> di dalam <main id="content">) */
+    'klasik':   ['home', 'mempelai', 'acara', 'galeri', 'hadiah', 'ucapan'],
+    'benderang': ['home', 'mempelai', 'galeri', 'acara', 'ucapan', 'hadiah'],
+    'modern':   ['home', 'mempelai', 'acara', 'galeri', 'ucapan', 'hadiah'],
+    'cerita':   ['home', 'mempelai', 'galeri', 'acara', 'ucapan', 'hadiah'],
+    'ringkas':  ['home', 'acara', 'mempelai', 'galeri', 'ucapan', 'hadiah']
+};
+
+/* Skema layout bawaan per kelompok font — dipakai bila tema tak set 'layout'. */
+const LAYOUT_BY_FONT = {
+    classic: 'klasik', luxury: 'benderang', modern: 'modern',
+    romantic: 'cerita', minimal: 'ringkas'
+};
+
+function applyWeddingLayout(skema) {
+    const main = document.getElementById('content');
+    if (!main || !LAYOUT_SKEMA[skema]) return;
+    /* appendChild memindahkan node ke urutan baru (tidak menggandakan). */
+    LAYOUT_SKEMA[skema].forEach(id => {
+        const sec = document.getElementById(id);
+        if (sec && sec.parentElement === main) main.appendChild(sec);
+    });
+}
+
+function applyWeddingTheme(cfg) {
+    const root = document.documentElement;
+    const old  = document.getElementById('wedding-theme-vars');
+    if (old) old.remove();
+    root.removeAttribute('data-theme');
+    GAYA_ATTRS.forEach(a => root.removeAttribute('data-gaya-' + a));
+
+    /* Selalu kembalikan susunan klasik dulu, baru terapkan skema bila tema aktif */
+    applyWeddingLayout('klasik');
+
+    if (!cfg || !cfg.aktif || cfg.aktif === 'royal-gold') return;
+
+    const theme = resolveWeddingTheme(cfg);
+    if (!theme || theme.id === 'royal-gold') return;
+
+    root.setAttribute('data-theme', theme.id);
+
+    const gaya = Object.assign({}, DEFAULT_GAYA, theme.gaya || {});
+    GAYA_ATTRS.forEach(a => {
+        if (gaya[a]) root.setAttribute('data-gaya-' + a, gaya[a]);
+    });
+
+    /* TERAPKAN SKEMA SUSUNAN: urutan seksi di dalam <main> berubah total */
+    applyWeddingLayout(gaya.layout || LAYOUT_BY_FONT[gaya.font] || 'klasik');
+
+    const style = document.createElement('style');
+    style.id = 'wedding-theme-vars';
+    style.textContent = `html[data-theme="${theme.id}"]{` +
+        Object.entries(theme.vars || {}).map(([k, v]) => `${k}:${v};`).join('') +
+        '}';
+    document.head.appendChild(style);
+}
+
+/* =====================================================
    TOAST NOTIFIKASI
    ===================================================== */
 
@@ -90,6 +174,24 @@ const W = {
 
 const music    = $('#bg-music');
 const musicBtn = $('#btn-music');
+
+async function loadBackgroundMusic() {
+    try {
+        const { data, error } = await db
+            .from('lagu')
+            .select('file_url, title')
+            .order('id', { ascending: true })
+            .limit(1)
+            .maybeSingle();
+
+        if (!error && data?.file_url) {
+            music.src = data.file_url;
+            music.title = data.title || 'Background Music';
+        }
+    } catch (err) {
+        console.warn('Gagal memuat lagu dari database, menggunakan default:', err);
+    }
+}
 
 function toggleMusic() {
     if (music.paused) {
@@ -259,16 +361,6 @@ function initLightbox() {
 /* =====================================================
    RSVP / KONFIRMASI KEHADIRAN
    ===================================================== */
-
-(function syncGuests() {
-    const form = $('#form-rsvp');
-    const att  = form.querySelector('select[name="attendance"]');
-    const wrap = $('#guests-wrap');
-
-    function update() { wrap.hidden = att.value !== 'hadir'; }
-    att.addEventListener('change', update);
-    update();
-})();
 
 async function loadStats() {
     try {
@@ -476,6 +568,12 @@ async function loadWeddingData() {
 
         W.wedding = data.value;
         W.surah = data.value.surah || 'Ar-Rum:21';
+
+        const urlTema = new URLSearchParams(location.search).get('tema');
+        const temaCfg = (urlTema && data.value.tema)
+            ? Object.assign({}, data.value.tema, { aktif: urlTema })
+            : data.value.tema;
+        applyWeddingTheme(temaCfg);
         populateHTML(W.wedding);
 
     } catch (err) {
@@ -587,24 +685,12 @@ function populateHTML(w) {
             </div>
         </div>`;
 
-    // Parameter 'pb' milik Google adalah blob terenkripsi yang tidak bisa
-    // dibuat manual (memicu "Invalid 'pb' parameter"). Gunakan format
-    // output=embed yang valid tanpa API key.
-    const embedLat = w.resepsi.latitude || '';
-    const embedLng = w.resepsi.longitude || '';
-    const buildEmbedUrl = (lat, lng) =>
-        `https://maps.google.com/maps?q=${encodeURIComponent(lat)},${encodeURIComponent(lng)}&z=15&output=embed`;
-    $('#maps-embed').src = (embedLat && embedLng)
-        ? buildEmbedUrl(embedLat, embedLng)
-        : (w.resepsi.maps_embed || buildEmbedUrl('-6.911521', '109.649375'));
-
     // Galeri (dengan fallback gradient kalau foto belum tersedia / nama salah)
     $('#gallery-grid').innerHTML = w.galeri.map(src => {
         const safe = esc(src);
         return `<figure class="gallery-item reveal" data-src="${safe}">
             <img src="${safe}" alt="Galeri pernikahan" loading="lazy"
-                 onerror="this.onerror=null;this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#b98e52 0%,#4a3b2f 100%)';this.parentElement.querySelector('.gallery-placeholder')?.remove()">
-            <span class="gallery-placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;color:#fffdf9;font-size:.9rem;font-weight:500;letter-spacing:.06em">Foto tersedia</span>
+                 onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('gallery-fallback')">
             <figcaption><i class="fas fa-search-plus"></i></figcaption>
         </figure>`;
     }).join('');
@@ -643,6 +729,7 @@ function populateHTML(w) {
    ===================================================== */
 
 loadWeddingData();
+loadBackgroundMusic();
 initReveal();
 initNavSpy();
 

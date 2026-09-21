@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html lang="id" data-tema="champagne-classic"
+      data-gaya-font="luxury" data-gaya-ornament="royal" data-gaya-shape="rounded"
+      data-gaya-cover="ornate" data-gaya-texture="grain">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Undangan pernikahan Gilang & Aira">
+<title>Gilang &amp; Aira â€” Champagne Classic</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Marck+Script&family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/font-awesome.min.css">
+<link rel="stylesheet" href="../style.css">
+<style>
+/* Identitas Champagne: bingkai emas ganda, serif monumental, nuansa sampanye */
+body.champagne { background:#fbf7ee; }
+.cover-frame { width:min(92%,560px); }
+.cover-frame .ornate-frame { border:1px solid rgba(178,146,84,.65); outline:8px solid rgba(178,146,84,.18); width:100%; padding:34px 22px; }
+.hairline { height:1px; width:120px; margin:18px auto; background:linear-gradient(90deg,transparent,#b29254,transparent); }
+.section-head h1, .section-title { font-family:'Playfair Display',serif; }
+</style>
+</head>
+<body class="locked">
+
+<!-- ================= COVER (BINGKAI ORNATE GANDA) ================= -->
+<div id="cover" class="cover cover-ornate" role="dialog" aria-label="Cover undangan">
+    <div class="cover-frame reveal">
+        <div class="ornate-frame">
+            <p class="cover-labels">The Wedding Of</p>
+            <h1 class="cover-script">Gilang <span>&amp;</span> Aira</h1>
+            <div class="hairline"></div>
+            <p class="cover-labels small">Sabtu, 12 Juni 2027 &middot; Bandung</p>
+            <div class="cover-guest" id="cover-guest">
+                <span>Kepada Yth.</span>
+                <strong id="cv-guest-name">Bapak/Ibu/Saudara/i</strong>
+            </div>
+            <button id="btn-open" class="btn-gold" type="button"><i class="fas fa-envelope-open"></i> Buka Undangan</button>
+        </div>
+    </div>
+<!-- ================= MUSIK ================= -->
+<button id="btn-music" class="music-btn" type="button" aria-label="Putar / jeda musik" hidden><i class="fas fa-music"></i></button>
+<audio id="bg-music" loop src="../Shania.mp3"></audio>
+</div>
+
+<!-- ================= NAVBAR ================= -->
+<nav id="navbar" class="navbar-bottom" hidden>
+    <a href="#home"    class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="#mempelai" class="nav-item"><i class="fas fa-user-friends"></i><span>Mempelai</span></a>
+    <a href="#galeri"  class="nav-item"><i class="far fa-images"></i><span>Galeri</span></a>
+    <a href="#acara"   class="nav-item"><i class="far fa-calendar-alt"></i><span>Acara</span></a>
+    <a href="#ucapan"  class="nav-item"><i class="far fa-envelope"></i><span>Ucapan</span></a>
+</nav>
+
+<main id="content">
+
+<!-- ================= HERO ================= -->
+<section id="home" class="hero hero-champagne">
+    <p class="eyebrow reveal">The Wedding Of</p>
+    <h1 class="couple-script reveal">Gilang <span>&amp;</span> Aira</h1>
+    <div class="hairline reveal"></div>
+    <p class="hero-date reveal">12 Juni 2027</p>
+
+    <div id="countdown" class="countdown reveal" data-target="">
+        <div class="cd-box"><b id="cd-days">--</b><small>Hari</small></div>
+        <div class="cd-box"><b id="cd-hours">--</b><small>Jam</small></div>
+        <div class="cd-box"><b id="cd-minutes">--</b><small>Menit</small></div>
+        <div class="cd-box"><b id="cd-seconds">--</b><small>Detik</small></div>
+    </div>
+    <p id="countdown-done" class="countdown-done" hidden>Alhamdulillah, kami telah resmi menikah. Terima kasih atas doa dan restunya!</p>
+
+    <a href="#mempelai" class="scroll-hint reveal"><i class="fas fa-chevron-down"></i></a>
+</section>
+
+<!-- ================= MEMPELAI ================= -->
+<section id="mempelai" class="section">
+    <div class="section-head reveal">
+        <p class="eyebrow">Bismillahirrahmanirrahim</p>
+        <h2>Assalamu'alaikum Warahmatullahi Wabarakatuh</h2>
+        <blockquote id="surah-blockquote">
+            <p>"Maha Suci Allah yang telah menciptakan pasangan-pasangan semuanya, baik dari apa yang ditumbuhkan oleh bumi dan dari diri mereka maupun dari apa yang tidak mereka ketahui."</p>
+            <cite>- Q.S. Yasin:36 -</cite>
+        </blockquote>
+    </div>
+
+    <div class="couple-grid">
+        <div class="couple-card reveal">
+            <div class="photo-ring">
+                <img id="groom-foto" src="../img/avatar-groom.svg" alt="Foto Mempelai Pria">
+            </div>
+            <h3 class="couple-name" id="groom-nama">Gilang Ramadhan Putra</h3>
+            <p class="parents">Putra dari<br><span id="groom-orangtua">Bpk. H. Subakti &amp; Ibu Hj. Endah</span></p>
+            <a class="ig-link" href="#" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i> <span id="groom-ig-text">@gilangrma</span>
+            </a>
+        </div>
+
+        <div class="ampersand reveal">&amp;</div>
+
+        <div class="couple-card reveal">
+            <div class="photo-ring">
+                <img id="bride-foto" src="../img/avatar-bride.svg" alt="Foto Mempelai Wanita">
+            </div>
+            <h3 class="couple-name" id="bride-nama">Aira Anggraini Kusuma</h3>
+            <p class="parents">Putri dari<br><span id="bride-orangtua">Bpk. Ir. Danu &amp; Ibu Dra. Ratih</span></p>
+            <a class="ig-link" href="#" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i> <span id="bride-ig-text">@airakusuma</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ALUR CERITA ================= -->
+<section id="kisah" class="section section-alt">
+    <div class="section-head reveal">
+        <p class="eyebrow">Our Story</p>
+        <h2>Perjalanan Cinta</h2>
+    </div>
+    <div class="timeline">
+        <div class="tl-item reveal">
+            <span class="tl-dot"><i class="fas fa-heart"></i></span>
+            <time>2018</time>
+            <div class="tl-card">
+                <h4>Berawal dari Bangku Kuliah</h4>
+                <p>Bertemu di kelas arsitektur semester tiga, berbagi pinjaman pulpen dan berlanjut berbagi cerita.</p>
+            </div>
+        </div>
+        <div class="tl-item reveal">
+            <span class="tl-dot"><i class="fas fa-heart"></i></span>
+            <time>2022</time>
+            <div class="tl-card">
+                <h4>Menjalin Komitmen</h4>
+                <p>Setelah lulus dan berkarier, kami mantap melangkah serius menuju jenjang berikutnya.</p>
+            </div>
+        </div>
+        <div class="tl-item reveal">
+            <span class="tl-dot"><i class="fas fa-heart"></i></span>
+            <time>April 2027</time>
+            <div class="tl-card">
+                <h4>Lamaran</h4>
+                <p>Dengan restu kedua keluarga, ikatan kami disahkan dalam acara lamaran yang hangat.</p>
+            </div>
+        </div>
+        <div class="tl-item reveal">
+            <span class="tl-dot"><i class="fas fa-heart"></i></span>
+            <time>12 Juni 2027</time>
+            <div class="tl-card">
+                <h4>&rdquo;I Do&rdquo;</h4>
+                <p>Hari paling dinanti â€” mengucap janji suci di hadapan keluarga dan sahabat.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= GALERI ================= -->
+<section id="galeri" class="section">
+    <div class="section-head reveal">
+        <p class="eyebrow">Our Moments</p>
+        <h2>Galeri</h2>
+    </div>
+    <div class="gallery-grid" id="gallery-grid">
+        <figure class="gallery-item reveal"><img src="../img/gallery-1.svg" alt="Galeri 1"></figure>
+        <figure class="gallery-item reveal"><img src="../img/gallery-2.svg" alt="Galeri 2"></figure>
+        <figure class="gallery-item reveal"><img src="../img/gallery-3.svg" alt="Galeri 3"></figure>
+        <figure class="gallery-item reveal"><img src="../img/gallery-4.svg" alt="Galeri 4"></figure>
+        <figure class="gallery-item reveal"><img src="../img/gallery-5.svg" alt="Galeri 5"></figure>
+        <figure class="gallery-item reveal"><img src="../img/gallery-6.svg" alt="Galeri 6"></figure>
+    </div>
+</section>
+
+<!-- ================= ACARA ================= -->
+<section id="acara" class="section section-alt">
+    <div class="section-head reveal">
+        <p class="eyebrow">Save The Date</p>
+        <h2>Rangkaian Acara</h2>
+    </div>
+
+    <div class="event-grid" id="event-grid">
+        <div class="event-card reveal">
+            <div class="event-icon"><i class="fas fa-ring"></i></div>
+            <h3>Akad Nikah</h3>
+            <p class="event-date">Sabtu, 12 Juni 2027</p>
+            <p>09.00 - 11.00 WIB<br>Masjid Raya Al-Fatah<br><small>Jl. Merdeka No. 1</small></p>
+            <a class="btn-outline" href="https://maps.google.com/?q=Masjid+Raya+Al-Fatah" target="_blank" rel="noopener">
+                <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
+            </a>
+        </div>
+        <div class="event-card reveal">
+            <div class="event-icon"><i class="fas fa-glass-cheers"></i></div>
+            <h3>Resepsi</h3>
+            <p class="event-date">Sabtu, 12 Juni 2027</p>
+            <p>12.00 - 16.00 WIB<br>Gedung Graha Nusantara<br><small>Jl. Asia Afrika No. 21</small></p>
+            <a class="btn-outline" href="https://maps.google.com/?q=Gedung+Graha+Nusantara" target="_blank" rel="noopener">
+                <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= HADIAH ================= -->
+<section id="hadiah" class="section">
+    <div class="section-head reveal">
+        <p class="eyebrow">Wedding Gift</p>
+        <h2>Kirim Hadiah</h2>
+        <p class="subtext">Kehadiran Anda adalah hadiah terbaik. Bila ingin memberi tanda kasih:</p>
+    </div>
+
+    <div class="gift-grid" id="gift-grid">
+        <div class="gift-card reveal">
+            <div class="gift-bank">BCA</div>
+            <div class="gift-norek">2024556677</div>
+            <p class="gift-aname">a.n. Gilang Ramadhan</p>
+            <button type="button" class="btn-gold btn-copy" data-copy="2024556677"><i class="far fa-copy"></i> Salin Nomor</button>
+        </div>
+        <div class="gift-card reveal">
+            <div class="gift-bank">Mandiri</div>
+            <div class="gift-norek">9887332211</div>
+            <p class="gift-aname">a.n. Aira Anggraini</p>
+            <button type="button" class="btn-gold btn-copy" data-copy="9887332211"><i class="far fa-copy"></i> Salin Nomor</button>
+        </div>
+    </div>
+
+    <div class="kado-fisik reveal">
+        <i class="fas fa-gift"></i>
+        <p><strong>Kirim kado fisik?</strong><br><span id="kado-alamat">Jl. Dipatiukur No. 34, Bandung</span></p>
+    </div>
+</section>
+
+<!-- ================= UCAPAN ================= -->
+<section id="ucapan" class="section section-alt">
+    <div class="section-head reveal">
+        <p class="eyebrow">RSVP &amp; Wishes</p>
+        <h2>Konfirmasi &amp; Ucapan</h2>
+    </div>
+
+    <div class="rsvp-grid">
+        <div class="card rsvp-card reveal">
+            <h3><i class="fas fa-check-circle"></i> Konfirmasi Kehadiran</h3>
+            <form id="form-rsvp">
+                <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
+                <label>Nama Anda</label>
+                <input type="text" name="name" maxlength="100" placeholder="Nama lengkap" required>
+                <label>Jumlah Tamu</label>
+                <select name="guests">
+                    <option value="1">1 Orang</option>
+                    <option value="2">2 Orang</option>
+                    <option value="3">3 Orang</option>
+                    <option value="4">4 Orang</option>
+                </select>
+                <label>Status Kehadiran</label>
+                <select name="attendance" required>
+                    <option value="" disabled selected>Pilih statusâ€¦</option>
+                    <option value="hadir">Hadir</option>
+                    <option value="tidak_hadir">Tidak Hadir</option>
+                    <option value="ragu">Masih Ragu</option>
+                </select>
+                <button type="submit" class="btn-gold" id="btn-rsvp"><i class="far fa-paper-plane"></i> Kirim Konfirmasi</button>
+            </form>
+            <div id="rsvp-stats" class="rsvp-stats" hidden>
+                <div><b id="st-hadir">0</b><span>Hadir</span></div>
+                <div><b id="st-ragu">0</b><span>Ragu</span></div>
+                <div><b id="st-tidak">0</b><span>Tidak Hadir</span></div>
+            </div>
+        </div>
+
+        <div class="card ucapan-card reveal">
+            <h3><i class="fas fa-praying-hands"></i> Ucapan &amp; Doa</h3>
+            <form id="form-ucapan">
+                <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
+                <label>Nama Anda</label>
+                <input type="text" name="name" maxlength="100" placeholder="Nama lengkap" required>
+                <label>Ucapan &amp; Doa</label>
+                <textarea name="message" maxlength="500" rows="4" placeholder="Tulis ucapan & doaâ€¦" required></textarea>
+                <button type="submit" class="btn-gold" id="btn-ucapan"><i class="far fa-paper-plane"></i> Kirim Ucapan</button>
+            </form>
+            <div id="ucapan-list" class="ucapan-list" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <div class="share-wrap reveal">
+        <button id="btn-share" type="button" class="btn-outline"><i class="fab fa-whatsapp"></i> Bagikan Undangan</button>
+    </div>
+</section>
+
+</main>
+
+<footer class="footer">
+    <p class="couple-script small"><span id="ft-groom">Gilang</span> &amp; <span id="ft-bride">Aira</span></p>
+    <p>Terima kasih atas doa dan restu Anda</p>
+    <small>&copy; 2027 Undangan Pernikahan Online</small>
+</footer>
+
+<!-- ================= LIGHTBOX ================= -->
+<div id="lightbox" class="lightbox" hidden>
+    <button class="lb-close" type="button" aria-label="Tutup"><i class="fas fa-times"></i></button>
+    <button class="lb-prev" type="button" aria-label="Sebelumnya"><i class="fas fa-chevron-left"></i></button>
+    <img id="lightbox-img" src="" alt="Foto galeri diperbesar">
+    <button class="lb-next" type="button" aria-label="Berikutnya"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<!-- ================= TOAST ================= -->
+<div id="toast" class="toast" role="status"></div>
+
+<script src="../themes.js"></script>
+<script src="../script.js"></script>
+</body>
+</html>

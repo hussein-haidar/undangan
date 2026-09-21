@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id" data-tema="sage-garden"
+      data-gaya-font="romantic" data-gaya-ornament="floral" data-gaya-shape="soft"
+      data-gaya-cover="ornate" data-gaya-texture="bloom">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Undangan pernikahan Rangga & Salsa">
+<title>Rangga &amp; Salsa — Sage Garden</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="locked">
+
+<!-- ================= COVER ================= -->
+<div id="cover" class="cover" role="dialog" aria-label="Cover undangan">
+    <div class="cover-frame">
+        <div class="cover-open-ic reveal"><i class="fas fa-leaf"></i></div>
+        <p class="cover-kicker reveal">The Wedding Of</p>
+        <h1 class="cover-couple reveal">Rangga <span>&amp;</span> Salsa</h1>
+        <p class="cover-date reveal">17 Juni 2027</p>
+        <p class="cover-tamu reveal" id="cover-tamu">
+            Kepada Yth.<br><strong id="cv-guest-name">Bapak/Ibu/Sdr/i</strong>
+        </p>
+        <button id="btn-open" class="btn-gold reveal" type="button"><i class="far fa-heart"></i> Buka Undangan</button>
+    </div>
+</div>
+
+<!-- ================= MUSIK ================= -->
+<button id="btn-music" class="music-btn" type="button" aria-label="Putar / jeda musik" hidden><i class="fas fa-music"></i></button>
+<audio id="bg-music" loop src="Shania.mp3"></audio>
+
+<!-- ================= NAVBAR BAWAH ================= -->
+<nav id="navbar" class="navbar-bottom" hidden>
+    <a href="#home"     class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="#mempelai" class="nav-item"><i class="fas fa-seedling"></i><span>Mempelai</span></a>
+    <a href="#kisah"    class="nav-item"><i class="far fa-heart"></i><span>Kisah</span></a>
+    <a href="#acara"    class="nav-item"><i class="far fa-calendar-alt"></i><span>Acara</span></a>
+    <a href="#galeri"   class="nav-item"><i class="far fa-images"></i><span>Galeri</span></a>
+    <a href="#ucapan"   class="nav-item"><i class="far fa-envelope"></i><span>Ucapan</span></a>
+</nav>
+
+<main id="content">
+
+<!-- ================= HERO ================= -->
+<section id="home" class="hero">
+    <div class="hero-frame reveal"><i class="fas fa-seedling"></i></div>
+    <p class="hero-eyebrow reveal">Undangan Pernikahan</p>
+    <h1 class="couple-script big reveal">Rangga <span>&amp;</span> Salsa</h1>
+    <div class="hero-rule reveal"><i class="fas fa-leaf"></i></div>
+    <p class="hero-date reveal">17 Juni 2027</p>
+
+    <div id="countdown" class="countdown reveal" data-target="">
+        <div class="cd-box"><b id="cd-days">--</b><small>Hari</small></div>
+        <div class="cd-box"><b id="cd-hours">--</b><small>Jam</small></div>
+        <div class="cd-box"><b id="cd-minutes">--</b><small>Menit</small></div>
+        <div class="cd-box"><b id="cd-seconds">--</b><small>Detik</small></div>
+    </div>
+    <p id="countdown-done" class="countdown-done" hidden>Alhamdulillah, kami telah resmi menikah. Terima kasih atas doa dan restunya!</p>
+
+    <a href="#mempelai" class="scroll-hint reveal"><i class="fas fa-chevron-down"></i></a>
+</section>
+
+<!-- ================= MEMPELAI ================= -->
+<section id="mempelai" class="section">
+    <div class="section-head reveal">
+        <p class="eyebrow">Bismillahirrahmanirrahim</p>
+        <h2>Dengan Memohon Rahmat &amp; Ridho Allah SWT</h2>
+        <blockquote id="surah-q">
+            <q>Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir.</q>
+            <cite>- Q.S. <span id="surah-ref">Ar-Rum: 21</span> -</cite>
+        </blockquote>
+    </div>
+
+    <div class="couple-grid">
+        <div class="couple-card reveal">
+            <div class="photo-ring">
+                <img id="groom-foto" src="img/avatar-groom.svg" alt="Foto Mempelai Pria">
+            </div>
+            <h3 class="couple-name" id="groom-nama">Rangga Aditya Pratama</h3>
+            <p class="parents">Putra dari<br><span id="groom-orangtua">Bpk. H. Supriyadi &amp; Ibu Hj. Tutik</span></p>
+            <a class="ig-link" href="#" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i> <span id="groom-ig-text">@ranggaadit</span>
+            </a>
+        </div>
+
+        <div class="ampersand reveal">&amp;</div>
+
+        <div class="couple-card reveal">
+            <div class="photo-ring">
+                <img id="bride-foto" src="img/avatar-bride.svg" alt="Foto Mempelai Wanita">
+            </div>
+            <h3 class="couple-name" id="bride-nama">Salsa Kirana Dewanti</h3>
+            <p class="parents">Putri dari<br><span id="bride-orangtua">Bpk. Drs. Suharno &amp; Ibu Dra. Wati</span></p>
+            <a class="ig-link" href="#" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i> <span id="bride-ig-text">@salsakira</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= KISAH CINTA (LOVE STORY TIMELINE — pembeda) ================= -->
+<section id="kisah" class="section section-alt">
+    <div class="section-head reveal">
+        <p class="eyebrow">Our Love Story</p>
+        <h2>Jalan Menuju Bahagia</h2>
+    </div>
+
+    <div class="story-grid" id="story-grid">
+        <div class="story-card reveal">
+            <div class="story-dot"><i class="fas fa-seedling"></i></div>
+            <time>2019</time>
+            <h3>Pertemuan Pertama</h3>
+            <p>Berjumpa di sebuah acara sukarelawan lingkungan hidup, keduanya langsung akrab karena hobi berkebun yang sama.</p>
+        </div>
+        <div class="story-card reveal">
+            <div class="story-dot"><i class="fas fa-hand-holding-heart"></i></div>
+            <time>2020</time>
+            <h3>Mulai Menyemai Cinta</h3>
+            <p>Dari teman satu komunitas, tumbuh ketertarikan yang terus disirami kebersamaan setiap pekan.</p>
+        </div>
+        <div class="story-card reveal">
+            <div class="story-dot"><i class="fas fa-ring"></i></div>
+            <time>Januari 2027</time>
+            <h3>Lamaran</h3>
+            <p>Dengan restu kedua keluarga, cinta kami disematkan dalam ikatan resmi menuju pelaminan.</p>
+        </div>
+        <div class="story-card reveal">
+            <div class="story-dot"><i class="fas fa-heart"></i></div>
+            <time>17 Juni 2027</time>
+            <h3>Puncak Kebahagiaan</h3>
+            <p>Mengucap janji suci di hadapan Sang Khalik dan seluruh keluarga besar tercinta.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ACARA ================= -->
+<section id="acara" class="section">
+    <div class="section-head reveal">
+        <p class="eyebrow">Save The Date</p>
+        <h2>Rangkaian Acara</h2>
+    </div>
+
+    <div class="event-grid" id="event-grid">
+        <div class="event-card reveal">
+            <div class="event-icon"><i class="fas fa-ring"></i></div>
+            <h3>Akad Nikah</h3>
+            <p class="event-date">Kamis, 17 Juni 2027</p>
+            <p>09.00 - 11.00 WIB<br>Masjid Agung At-Taqwa<br><small>Jl. Sultan Hasanudin No. 2</small></p>
+            <a class="btn-outline" href="https://maps.google.com/?q=Masjid+Agung+At-Taqwa" target="_blank" rel="noopener">
+                <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
+            </a>
+        </div>
+        <div class="event-card reveal">
+            <div class="event-icon"><i class="fas fa-glass-cheers"></i></div>
+            <h3>Resepsi</h3>
+            <p class="event-date">Kamis, 17 Juni 2027</p>
+            <p>11.00 - 15.00 WIB<br>Pendopo Ageng Banyu Bening<br><small>Jl. Parangtritis Km 12</small></p>
+            <a class="btn-outline" href="https://maps.google.com/?q=Pendopo+Ageng+Banyu+Bening" target="_blank" rel="noopener">
+                <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
+            </a>
+        </div>
+    </div>
+
+    <div class="dress-code reveal">
+        <h3>Dress Code <span class="dc-badge">Sage &amp; Cream</span></h3>
+        <p>Para tamu dihormati mengenakan warna bernuansa <strong>sage green</strong>, krem, dan putih gading.</p>
+        <div class="color-dots">
+            <span style="background:#7d9b82"></span>
+            <span style="background:#d9e2d4"></span>
+            <span style="background:#f2ecd9"></span>
+        </div>
+    </div>
+</section>
+
+<!-- ================= GALERI ================= -->
+<section id="galeri" class="section section-alt">
+    <div class="section-head reveal">
+        <p class="eyebrow">Our Moments</p>
+        <h2>Galeri Tersayang</h2>
+    </div>
+    <div class="gallery-grid" id="gallery-grid">
+        <figure class="gallery-item reveal"><img src="img/gallery-1.svg" alt="Galeri 1"></figure>
+        <figure class="gallery-item reveal"><img src="img/gallery-2.svg" alt="Galeri 2"></figure>
+        <figure class="gallery-item reveal"><img src="img/gallery-3.svg" alt="Galeri 3"></figure>
+        <figure class="gallery-item reveal"><img src="img/gallery-4.svg" alt="Galeri 4"></figure>
+        <figure class="gallery-item reveal"><img src="img/gallery-5.svg" alt="Galeri 5"></figure>
+        <figure class="gallery-item reveal"><img src="img/gallery-6.svg" alt="Galeri 6"></figure>
+    </div>
+</section>
+
+<!-- ================= HADIAH ================= -->
+<section id="hadiah" class="section">
+    <div class="section-head reveal">
+        <p class="eyebrow">Wedding Gift</p>
+        <h2>Kirim Hadiah</h2>
+        <p class="subtext">Kehadiran dan doa Anda adalah hadiah terbaik. Bila ingin memberi tanda kasih, silakan melalui:</p>
+    </div>
+    <div class="gift-grid" id="gift-grid">
+        <div class="gift-card reveal">
+            <div class="gift-bank">BCA</div>
+            <div class="gift-norek">1234567890</div>
+            <p class="gift-aname">a.n. Rangga Aditya</p>
+            <button type="button" class="btn-gold btn-copy" data-copy="1234567890"><i class="far fa-copy"></i> Salin Nomor</button>
+        </div>
+        <div class="gift-card reveal">
+            <div class="gift-bank">Mandiri</div>
+            <div class="gift-norek">0987654321</div>
+            <p class="gift-aname">a.n. Salsa Kirana</p>
+            <button type="button" class="btn-gold btn-copy" data-copy="0987654321"><i class="far fa-copy"></i> Salin Nomor</button>
+        </div>
+    </div>
+    <div class="kado-fisik reveal">
+        <i class="fas fa-gift"></i>
+        <p><strong>Kirim kado fisik?</strong><br><span id="kado-alamat">Jl. Kenanga No. 21, Yogyakarta</span></p>
+    </div>
+</section>
+
+<!-- ================= UCAPAN ================= -->
+<section id="ucapan" class="section section-alt">
+    <div class="section-head reveal">
+        <p class="eyebrow">RSVP &amp; Wishes</p>
+        <h2>Konfirmasi &amp; Ucapan</h2>
+    </div>
+
+    <div class="rsvp-grid">
+        <div class="card rsvp-card reveal">
+            <h3><i class="fas fa-check-circle"></i> Konfirmasi Kehadiran</h3>
+            <form id="form-rsvp">
+                <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
+                <label>Nama Anda</label>
+                <input type="text" name="name" maxlength="100" placeholder="Nama lengkap" required>
+                <label>Jumlah Tamu</label>
+                <select name="guests">
+                    <option value="1">1 Orang</option>
+                    <option value="2">2 Orang</option>
+                    <option value="3">3 Orang</option>
+                    <option value="4">4 Orang</option>
+                    <option value="5">5 Orang</option>
+                </select>
+                <label>Status Kehadiran</label>
+                <select name="attendance" required>
+                    <option value="" disabled selected>Pilih status…</option>
+                    <option value="hadir">Hadir</option>
+                    <option value="tidak_hadir">Tidak Hadir</option>
+                    <option value="ragu">Masih Ragu</option>
+                </select>
+                <button type="submit" class="btn-gold" id="btn-rsvp"><i class="far fa-paper-plane"></i> Kirim Konfirmasi</button>
+            </form>
+            <div id="rsvp-stats" class="rsvp-stats" hidden>
+                <div><b id="st-hadir">0</b><span>Hadir</span></div>
+                <div><b id="st-ragu">0</b><span>Ragu</span></div>
+                <div><b id="st-tidak">0</b><span>Tidak Hadir</span></div>
+            </div>
+        </div>
+
+        <div class="card ucapan-card reveal">
+            <h3><i class="fas fa-dove"></i> Ucapan &amp; Doa</h3>
+            <form id="form-ucapan">
+                <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
+                <label>Nama Anda</label>
+                <input type="text" name="name" maxlength="100" placeholder="Nama lengkap" required>
+                <label>Ucapan &amp; Doa</label>
+                <textarea name="message" maxlength="500" rows="4" placeholder="Tulis ucapan & doa…" required></textarea>
+                <button type="submit" class="btn-gold" id="btn-ucapan"><i class="far fa-paper-plane"></i> Kirim Ucapan</button>
+            </form>
+            <div id="ucapan-list" class="ucapan-list" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <div class="stats-row reveal">
+        <div class="stat-box"><b id="st-hadir">0</b><span>Hadir</span></div>
+        <div class="stat-box"><b id="st-ragu">0</b><span>Ragu</span></div>
+        <div class="stat-box"><b id="st-tidak">0</b><span>Tidak Hadir</span></div>
+    </div>
+
+    <div class="share-wrap reveal">
+        <button id="btn-share" type="button" class="btn-outline"><i class="fab fa-whatsapp"></i> Bagikan Undangan</button>
+    </div>
+</section>
+
+<footer class="footer">
+    <p class="couple-script small"><span id="ft-groom">Rangga</span> &amp; <span id="ft-bride">Salsa</span></p>
+    <p>Terima kasih atas doa dan restu Anda</p>
+    <small>&copy; 2027 Undangan Pernikahan Online</small>
+</footer>
+
+</main>
+
+<!-- ================= LIGHTBOX ================= -->
+<div id="lightbox" class="lightbox" hidden>
+    <button class="lb-close" type="button" aria-label="Tutup"><i class="fas fa-times"></i></button>
+    <button class="lb-prev" type="button" aria-label="Sebelumnya"><i class="fas fa-chevron-left"></i></button>
+    <img id="lightbox-img" src="" alt="Foto galeri diperbesar">
+    <button class="lb-next" type="button" aria-label="Berikutnya"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<!-- ================= TOAST ================= -->
+<div id="toast" class="toast" role="status"></div>
+
+<script src="themes.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

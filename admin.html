@@ -1,16 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — Undangan Pernikahan</title>
+<title>Admin â€” Undangan Pernikahan</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-integrity="sha256-sA+gZ2BY3IbK33BZq5u3cRNPd1ciynR0OzKp8vl+XeI=" crossorigin="" />
+<link rel="stylesheet" href="css/font-awesome.min.css?v=20260628c">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{--cream:#faf6ef;--cream-dark:#f1e8da;--gold:#b98e52;--gold-dark:#97702f;--gold-light:#d9b878;--brown:#4a3b2f;--brown-soft:#7a6a5c;--white:#fffdf9;--red:#c0392b;--green:#27ae60;--shadow:0 4px 16px rgba(74,59,47,.12);--radius:14px}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -32,7 +31,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold)!important;box-s
 .form-group label{display:block;font-size:.78rem;font-weight:500;color:var(--brown-soft);margin-bottom:5px;letter-spacing:.03em}
 .form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1.5px solid rgba(185,142,82,.35);border-radius:10px;background:var(--cream);font-family:inherit;font-size:.9rem;color:var(--brown);outline:none}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.btn{padding:10px 22px;border-radius:100px;font-size:.85rem;font-weight:500;transition:all .2s;border:none}
+.btn{padding:10px 22px;border-radius:100px;font-size:.85rem;font-weight:500;transition:all .2s;border:none;display:inline-block;text-decoration:none;text-align:center}
 .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);box-shadow:0 4px 12px rgba(151,112,47,.3)}
 .btn-gold:hover{transform:translateY(-1px)}
 .btn-gold:disabled{opacity:.5;cursor:wait;transform:none}
@@ -41,6 +40,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold)!important;box-s
 .btn-red{background:var(--red);color:#fff;font-size:.78rem;padding:6px 14px;border-radius:100px}
 .btn-red:hover{opacity:.85}
 .btn-sm{font-size:.78rem;padding:6px 14px}
+.btn[hidden]{display:none!important}
 .btn-block{width:100%;padding:12px}
 .auth-link{display:inline-block;margin-top:16px;font-size:.82rem;color:var(--gold-dark)}
 .auth-link:hover{text-decoration:underline}
@@ -98,9 +98,77 @@ tr:hover td{background:rgba(185,142,82,.04)}
 .profile-card h3{color:var(--gold-dark);margin-bottom:20px;font-size:1.2rem}
 .profile-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:600;margin:0 auto 20px}
 
+/* UPLOAD AREA */
+.upload-area{
+    border:2px dashed rgba(185,142,82,.4);
+    border-radius:var(--radius);
+    padding:40px 24px;
+    text-align:center;
+    background:var(--white);
+    cursor:pointer;
+    transition:all .2s;
+    margin-bottom:16px;
+}
+.upload-area:hover,.upload-area.dragover{
+    border-color:var(--gold);
+    background:rgba(185,142,82,.05);
+}
+.upload-area i{font-size:2.5rem;color:var(--gold);margin-bottom:12px}
+.upload-area p{color:var(--brown-soft);font-size:.9rem}
+.upload-area p span{color:var(--gold-dark);font-weight:500;cursor:pointer}
+.upload-area small{display:block;margin-top:8px;color:var(--brown-soft);font-size:.75rem}
+
+.upload-preview{
+    background:var(--white);
+    border-radius:var(--radius);
+    padding:16px;
+    border:1px solid rgba(185,142,82,.2);
+    margin-bottom:16px;
+}
+.preview-info{display:flex;align-items:center;gap:12px}
+.preview-info i{font-size:1.5rem;color:var(--gold)}
+.preview-info strong{display:block;color:var(--brown)}
+.preview-info small{color:var(--brown-soft);font-size:.75rem}
+.preview-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);z-index:200;background:var(--brown);color:var(--cream);padding:12px 24px;border-radius:100px;font-size:.88rem;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:all .3s}
 .toast.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
+
+/* THEME PICKER */
+.live-preview{background:var(--white);border:1px solid rgba(185,142,82,.3);border-radius:14px;padding:16px;margin-bottom:22px}
+.live-preview-title{display:flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600;color:var(--brown);margin-bottom:4px}
+.live-preview-sub{display:block;font-size:.76rem;color:var(--brown-soft);line-height:1.6;margin-bottom:14px}
+.theme-picker{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.tema-select-wrap{position:relative;flex:1;min-width:250px}
+.tema-select-wrap select{
+    width:100%;appearance:none;-webkit-appearance:none;-moz-appearance:none;
+    padding:12px 44px 12px 42px;
+    border:1.5px solid rgba(185,142,82,.4);border-radius:12px;
+    background:linear-gradient(180deg,var(--white),var(--cream));
+    font-family:inherit;font-size:.92rem;font-weight:500;color:var(--brown);
+    outline:none;cursor:pointer;transition:border-color .2s,box-shadow .2s;
+    box-shadow:0 2px 8px rgba(74,59,47,.06);
+}
+.tema-select-wrap select:hover{border-color:var(--gold)}
+.tema-select-wrap select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(185,142,82,.18)}
+.tema-select-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:.95rem;pointer-events:none}
+.tema-select-arrow{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--brown-soft);font-size:.8rem;pointer-events:none}
+.theme-picker-actions{display:flex;gap:8px;flex-wrap:wrap}
+.theme-active-note{font-size:.78rem;color:var(--brown-soft);margin:0 0 10px}
+.theme-active-note b{color:var(--gold-dark)}
+.live-preview iframe{width:100%;height:520px;border:1px solid rgba(185,142,82,.25);border-radius:8px;background:#fff}
+.live-preview-note{font-size:.76rem;color:var(--brown-soft);margin:8px 0 0}
+
+/* CUSTOM MARKER */
+.custom-marker div { transform: rotate(-45deg) !important; }
+.custom-marker div::before { content: ''; }
+
+/* LEAFLET OVERRIDES */
+.leaflet-container { font-family: 'Poppins', sans-serif; z-index: 1; }
+.leaflet-popup-content-wrapper { border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+.leaflet-popup-content { margin: 8px 12px; font-size: .85rem; line-height: 1.5; color: var(--brown); }
+.leaflet-popup-tip { box-shadow: 0 2px 6px rgba(0,0,0,.1); }
 
 /* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:150;display:none;align-items:center;justify-content:center;padding:20px}
@@ -195,7 +263,7 @@ tr:hover td{background:rgba(185,142,82,.04)}
 </div>
 
 <!-- =====================================================
-     SCREEN: LUPA PASSWORD — STEP 1: Verifikasi
+     SCREEN: LUPA PASSWORD â€” STEP 1: Verifikasi
      ===================================================== -->
 <div id="screen-forgot" class="screen">
     <div class="auth-wrap">
@@ -267,6 +335,7 @@ tr:hover td{background:rgba(185,142,82,.04)}
             <button class="tab-btn active" data-tab="rsvps"><i class="fas fa-check-circle"></i> RSVP</button>
             <button class="tab-btn" data-tab="comments"><i class="fas fa-comments"></i> Ucapan</button>
             <button class="tab-btn" data-tab="lagu"><i class="fas fa-music"></i> Lagu</button>
+            <button class="tab-btn" data-tab="tema"><i class="fas fa-palette"></i> Tema</button>
             <button class="tab-btn" data-tab="settings"><i class="fas fa-cog"></i> Settings</button>
             <button class="tab-btn" data-tab="profile"><i class="fas fa-user-circle"></i> Profil</button>
         </div>
@@ -291,18 +360,73 @@ tr:hover td{background:rgba(185,142,82,.04)}
 
         <!-- Lagu -->
         <div class="tab-panel" id="panel-lagu">
-            <button class="btn btn-gold btn-sm" id="btn-add-lagu" style="margin-bottom:14px"><i class="fas fa-plus"></i> Tambah Lagu</button>
+            <div class="upload-area" id="lagu-upload-area">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Seret file MP3 ke sini atau <span id="lagu-file-trigger">klik untuk pilih</span></p>
+                <small>Maks 10MB Â· Format: .mp3</small>
+                <input type="file" id="lagu-file-input" accept="audio/mpeg" hidden>
+            </div>
+            <div id="lagu-upload-preview" class="upload-preview" hidden>
+                <div class="preview-info">
+                    <i class="fas fa-music"></i>
+                    <div>
+                        <strong id="preview-title"></strong>
+                        <small id="preview-size"></small>
+                    </div>
+                </div>
+                <div class="preview-actions">
+                    <button type="button" class="btn btn-ghost btn-sm" id="lagu-cancel-upload"><i class="fas fa-times"></i></button>
+                    <button type="button" class="btn btn-gold btn-sm" id="lagu-confirm-upload"><i class="fas fa-upload"></i> Upload</button>
+                </div>
+                <div class="form-group" style="margin-top:12px">
+                    <label>Atau gunakan URL lagu (opsional)</label>
+                    <input type="url" id="lagu-url-input" placeholder="https://example.com/lagu.mp3" style="margin-top:6px">
+                </div>
+            </div>
             <div class="table-wrap"><table>
-                <thead><tr><th>Judul</th><th>File</th><th>Waktu</th><th>Aksi</th></tr></thead>
+                <thead><tr><th>Judul</th><th>Sumber</th><th>Waktu</th><th>Aksi</th></tr></thead>
                 <tbody id="lagu-tbody"></tbody>
             </table></div>
+        </div>
+
+        <!-- Tema -->
+        <div class="tab-panel" id="panel-tema">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+                <div style="max-width:560px">
+                    <p style="font-size:.85rem;color:var(--brown-soft);margin:0 0 4px">Pilih tema undangan atau buat tema kustom sesuai selera Anda.</p>
+                    <p style="font-size:.76rem;color:var(--brown-soft);margin:0;line-height:1.6;opacity:.9"><i class="fas fa-palette" style="color:var(--gold)"></i> Tema/Desain Bawaan (Preset Themes) adalah template standar siap pakai — cukup pilih untuk mengubah kombinasi warna, gaya tata letak, font, serta hiasan visual undangan, tanpa perlu mendesain dari awal.</p>
+                </div>
+                <button class="btn btn-gold" id="btn-add-theme"><i class="fas fa-plus"></i> Tambah Tema Kustom</button>
+            </div>
+<div class="live-preview" id="theme-live-preview">
+    <div class="live-preview-title"><i class="fas fa-eye" style="color:var(--gold)"></i> Pilih &amp; Pratinjau Tema</div>
+    <span class="live-preview-sub">Dropdown di bawah berisi semua tema — bawaan (preset), kustom buatan Anda, serta template V2. Setelah memilih, pratinjau langsung dimuat di sini.</span>
+    <div class="theme-picker">
+        <div class="tema-select-wrap">
+            <i class="fas fa-palette tema-select-icon"></i>
+            <select id="theme-preview-select" aria-label="Pilih tema untuk dipratinjau">
+                <option value="" selected disabled>— Pilih tema undangan —</option>
+            </select>
+            <i class="fas fa-chevron-down tema-select-arrow"></i>
+        </div>
+        <div class="theme-picker-actions">
+            <button type="button" class="btn btn-gold btn-sm" id="btn-apply-selected" disabled><i class="fas fa-check-circle"></i> Terapkan Tema</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="btn-preview-selected" hidden><i class="fas fa-window-restore"></i> Buka di Tab Baru</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="btn-edit-selected" hidden><i class="fas fa-edit"></i> Edit</button>
+            <button type="button" class="btn btn-red btn-sm" id="btn-delete-selected" hidden><i class="fas fa-trash"></i> Hapus</button>
+        </div>
+    </div>
+    <p class="theme-active-note" id="theme-active-note"></p>
+    <iframe id="theme-preview-frame" title="Pratinjau tema undangan inline"></iframe>
+    <p class="live-preview-note"><i class="fas fa-lightbulb"></i> Cukup pilih tema dari dropdown, lalu klik &quot;Terapkan Tema&quot; untuk mengaktifkannya sebagai tema undangan Anda.</p>
+</div>
         </div>
 
         <!-- Settings -->
         <div class="tab-panel" id="panel-settings">
             <p style="font-size:.85rem;color:var(--brown-soft);margin-bottom:14px">Edit data wedding. Lokasi dapat dipilih dengan mengklik peta di bawah ini.</p>
             
-            <!-- Akad Map -->
+<!-- Akad Map -->
             <div id="akad-map" style="height: 280px; width: 100%; border-radius: 8px; border: 1px solid rgba(185,142,82,.3); margin-bottom: 8px; overflow:hidden;"></div>
             <div class="form-row" style="align-items:flex-end;margin-bottom:16px">
                 <div class="form-group" style="margin:0;flex:1">
@@ -312,7 +436,7 @@ tr:hover td{background:rgba(185,142,82,.04)}
                 <button class="btn btn-ghost" id="akad-search-btn" style="height:42px"><i class="fas fa-search"></i> Cari</button>
             </div>
 
-            <!-- Resepsi Map -->
+<!-- Resepsi Map -->
             <div id="resepsi-map" style="height: 280px; width: 100%; border-radius: 8px; border: 1px solid rgba(185,142,82,.3); margin-bottom: 8px; overflow:hidden;"></div>
             <div class="form-row" style="align-items:flex-end;margin-bottom:16px">
                 <div class="form-group" style="margin:0;flex:1">
@@ -386,7 +510,7 @@ tr:hover td{background:rgba(185,142,82,.04)}
             <div class="form-group"><label>Status</label>
                 <select id="rsvp-attendance"><option value="hadir">Hadir</option><option value="tidak_hadir">Tidak Hadir</option><option value="ragu">Ragu</option></select>
             </div>
-            <div class="form-group"><label>Jumlah Tamu</label>
+            <div class="form-group"><label>Berapa Orang</label>
                 <select id="rsvp-guests"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
             </div>
         </div>
@@ -405,7 +529,7 @@ tr:hover td{background:rgba(185,142,82,.04)}
         <h3 id="comment-modal-title">Tambah Ucapan</h3>
         <input type="hidden" id="comment-edit-id">
         <div class="form-group"><label>Nama</label><input type="text" id="comment-name" maxlength="100" placeholder="Nama pengirim"></div>
-        <div class="form-group"><label>Ucapan / Doa</label><textarea id="comment-message" maxlength="500" rows="4" placeholder="Tulis ucapan…"></textarea></div>
+        <div class="form-group"><label>Ucapan / Doa</label><textarea id="comment-message" maxlength="500" rows="4" placeholder="Tulis ucapanâ€¦"></textarea></div>
         <div class="form-actions">
             <button class="btn btn-gold" id="btn-save-comment"><i class="fas fa-save"></i> Simpan</button>
             <button class="btn btn-ghost" id="btn-cancel-comment">Batal</button>
@@ -414,11 +538,11 @@ tr:hover td{background:rgba(185,142,82,.04)}
 </div>
 
 <!-- =====================================================
-      MODAL: LAGU
+      MODAL: LAGU (Edit Judul)
       ===================================================== -->
 <div class="modal-bg" id="modal-lagu">
     <div class="modal">
-        <h3 id="lagu-modal-title">Tambah Lagu</h3>
+        <h3 id="lagu-modal-title">Edit Lagu</h3>
         <input type="hidden" id="lagu-edit-id">
         <div class="form-group"><label>Judul Lagu</label><input type="text" id="lagu-title" maxlength="100" placeholder="Judul lagu"></div>
         <div class="form-group"><label>Upload File MP3</label><input type="file" id="lagu-upload" accept=".mp3,audio/mpeg"></div>
@@ -426,6 +550,80 @@ tr:hover td{background:rgba(185,142,82,.04)}
         <div class="form-actions">
             <button class="btn btn-gold" id="btn-save-lagu"><i class="fas fa-save"></i> Simpan</button>
             <button class="btn btn-ghost" id="btn-cancel-lagu">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+      MODAL: TEMA (Tambah / Edit Tema Kustom)
+      ===================================================== -->
+<div class="modal-bg" id="modal-theme">
+    <div class="modal" style="max-width:640px">
+        <h3 id="theme-modal-title">Tambah Tema Kustom</h3>
+        <input type="hidden" id="theme-edit-id">
+        <div class="form-group"><label>Nama Tema</label><input type="text" id="theme-name" maxlength="60" placeholder="Contoh: Navy Classic"></div>
+        <div class="form-group">
+            <label>Gaya Tema (selain warna)</label>
+            <div class="form-row" style="margin:0">
+                <div class="form-group" style="margin:0;flex:1">
+                    <small style="color:var(--brown-soft)">Font</small>
+                    <select id="theme-gaya-font">
+                        <option value="classic">Classic (Poppins + Cormorant)</option>
+                        <option value="luxury">Luxury (Lato + Playfair)</option>
+                        <option value="modern">Modern (Jost + Marcellus)</option>
+                        <option value="romantic">Romantic (Nunito + Cormorant italics)</option>
+                        <option value="minimal">Minimal (Jost + Cormorant)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin:0;flex:1">
+                    <small style="color:var(--brown-soft)">Ornamen</small>
+                    <select id="theme-gaya-ornament">
+                        <option value="dove">Merpati (dove)</option>
+                        <option value="floral">Bunga / daun</option>
+                        <option value="royal">Mahkota + cincin</option>
+                        <option value="geometry">Geometris</option>
+                        <option value="romance">Hati</option>
+                        <option value="minimal">Minimal (garis)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin:0;flex:1">
+                    <small style="color:var(--brown-soft)">Bentuk / Radius</small>
+                    <select id="theme-gaya-shape">
+                        <option value="soft">Lembut (default)</option>
+                        <option value="rounded">Rounded</option>
+                        <option value="square">Square</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row" style="margin:8px 0 0">
+                <div class="form-group" style="margin:0;flex:1">
+                    <small style="color:var(--brown-soft)">Gaya Cover</small>
+                    <select id="theme-gaya-cover">
+                        <option value="center">Tengah (default)</option>
+                        <option value="ornate">Frame dekoratif</option>
+                        <option value="modern">Modern (garis aksen)</option>
+                        <option value="minimal">Minimal</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin:0;flex:1">
+                    <small style="color:var(--brown-soft)">Tekstur</small>
+                    <select id="theme-gaya-texture">
+                        <option value="plain">Polos</option>
+                        <option value="grain">Bintik halus</option>
+                        <option value="bloom">Gradasi bunga</option>
+                        <option value="lines">Garis tipis</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Warna Tema (CSS variables)</label>
+            <textarea id="theme-vars" class="json-editor" style="min-height:280px" spellcheck="false"></textarea>
+            <small style="display:block;margin-top:8px;color:var(--brown-soft);font-size:.75rem;line-height:1.6">Format JSON: <code>{ "--accent": "#hex", "--cream": "#hex", ... }</code>. Variable yang boleh diubah: <code>--cream</code>, <code>--cream-dark</code>, <code>--white</code>, <code>--accent</code>, <code>--accent-dark</code>, <code>--accent-light</code>, <code>--brown</code>, <code>--brown-soft</code>, <code>--deep-1</code>, <code>--deep-2</code>, <code>--danger</code>. Kosongkan / hapus variable untuk memakai nilai default tema Royal Gold.</small>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-gold" id="btn-save-theme"><i class="fas fa-save"></i> Simpan</button>
+            <button class="btn btn-ghost" id="btn-cancel-theme">Batal</button>
         </div>
     </div>
 </div>
@@ -448,6 +646,7 @@ tr:hover td{background:rgba(185,142,82,.04)}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="themes.js?v=20260628c"></script>
 <script>
 'use strict';
 
@@ -456,7 +655,14 @@ tr:hover td{background:rgba(185,142,82,.04)}
    ===================================================== */
 const SUPABASE_URL = 'https://uvngztroskottsfxtgoq.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2bmd6dHJvc2tvdHRzZnh0Z29xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwMDgzMzksImV4cCI6MjEwMzU4NDMzOX0.5V-md9L6PSH-XMm_f3xmMyPC7S3sRqORpM-CDgQ5I60';
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let db = null;
+if (!window.supabase) {
+    console.error('Supabase JS gagal load dari CDN');
+    showToast('Supabase gagal load â€” cek koneksi/internet');
+} else {
+    db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+}
 
 /* =====================================================
    UTILS
@@ -547,6 +753,7 @@ $('#logout-btn').onclick = () => {
    REGISTER
    ===================================================== */
 $('#reg-btn').onclick = async () => {
+    if (!db) return showToast('DB tidak tersedia');
     const name  = $('#reg-name').value.trim();
     const phone = $('#reg-phone').value.trim();
     const user  = $('#reg-user').value.trim();
@@ -589,6 +796,7 @@ $('#login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLog
 $('#login-user').addEventListener('keydown', e => { if (e.key === 'Enter') $('#login-pass').focus(); });
 
 async function doLogin() {
+    if (!db) return showToast('DB tidak tersedia');
     const user = $('#login-user').value.trim();
     const pass = $('#login-pass').value;
     const errEl = $('#login-err');
@@ -648,6 +856,7 @@ async function doLogin() {
 let forgotAdminId = null;
 
 $('#forgot-verify-btn').onclick = async () => {
+    if (!db) return showToast('DB tidak tersedia');
     const user = $('#forgot-user').value.trim();
     const phone = $('#forgot-phone').value.trim();
     const errEl = $('#forgot-err');
@@ -761,6 +970,7 @@ async function loadAll() {
    STATS
    ===================================================== */
 async function loadStats() {
+    if (!db) return showToast('DB tidak tersedia');
     const { data } = await db.rpc('get_rsvp_stats');
     const s = data || {hadir:0,tidak_hadir:0,ragu:0,total_konfirmasi:0};
     $('#stats').innerHTML = `
@@ -774,6 +984,7 @@ async function loadStats() {
    CRUD RSVP
    ===================================================== */
 async function loadRsvps() {
+    if (!db) return showToast('DB tidak tersedia');
     const { data } = await db.from('rsvps').select('*').order('id',{ascending:false});
     const tbody = $('#rsvp-tbody');
     if (!data || !data.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty">Belum ada RSVP</td></tr>'; return; }
@@ -836,6 +1047,7 @@ $('#btn-cancel-rsvp').onclick = () => $('#modal-rsvp').classList.remove('show');
    CRUD COMMENTS
    ===================================================== */
 async function loadComments() {
+    if (!db) return showToast('DB tidak tersedia');
     const { data } = await db.from('comments').select('*').order('id',{ascending:false});
     const tbody = $('#comment-tbody');
     if (!data || !data.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty">Belum ada ucapan</td></tr>'; return; }
@@ -852,15 +1064,6 @@ async function loadComments() {
 }
 
 window._commentData = {};
-
-$('#btn-add-comment').onclick = () => {
-    $('#comment-modal-title').textContent = 'Tambah Ucapan';
-    $('#comment-edit-id').value = '';
-    $('#comment-name').value = '';
-    $('#comment-message').value = '';
-    $('#modal-comment').classList.add('show');
-    $('#comment-name').focus();
-};
 
 window.editComment = (id) => {
     const row = document.querySelector(`[onclick="editComment(${id})"]`)?.closest('tr');
@@ -907,12 +1110,26 @@ $('#btn-cancel-comment').onclick = () => $('#modal-comment').classList.remove('s
    SETTINGS (JSON EDITOR)
    ===================================================== */
 async function loadSettings() {
+    if (!db) return showToast('DB tidak tersedia');
     const { data } = await db.from('settings').select('value').eq('key','wedding').single();
     if (data && data.value) {
         $('#json-editor').value = JSON.stringify(data.value, null, 2);
         $('#json-status').className = 'json-status';
         $('#json-status').textContent = '';
     }
+    syncLocationFields();
+}
+
+function syncLocationFields() {
+    document.querySelectorAll('[data-field]').forEach(el => {
+        const path = el.getAttribute('data-field');
+        const val = getEditorField(path);
+        if (val) el.value = val;
+    });
+    if ($('#akad-info-name')) { $('#akad-info-name').textContent = getEditorField('akad.tempat') || 'Lokasi Akad'; }
+    if ($('#akad-info-address')) { $('#akad-info-address').textContent = getEditorField('akad.alamat') || ''; }
+    if ($('#resepsi-info-name')) { $('#resepsi-info-name').textContent = getEditorField('resepsi.tempat') || 'Lokasi Resepsi'; }
+    if ($('#resepsi-info-address')) { $('#resepsi-info-address').textContent = getEditorField('resepsi.alamat') || ''; }
 }
 
 $('#btn-save-settings').onclick = async () => {
@@ -954,6 +1171,7 @@ $('#btn-format-json').onclick = () => {
    ===================================================== */
 async function loadProfile() {
     if (!currentAdmin) return;
+    if (!db) return showToast('DB tidak tersedia');
     const { data } = await db.from('admins').select('*').eq('id', currentAdmin.id).single();
     if (!data) return;
     currentAdmin = data;
@@ -1006,11 +1224,14 @@ $('#btn-save-pass').onclick = async () => {
 /* =====================================================
    CRUD LAGU
    ===================================================== */
+let pendingUpload = null; // { file, title, url }
+
 async function loadLagu() {
+    if (!db) return showToast('DB tidak tersedia');
     const { data } = await db.from('lagu').select('*').order('id', { ascending: false });
     const tbody = $('#lagu-tbody');
     if (!data || !data.length) {
-        tbody.innerHTML = '<tr><td colspan="5" class="empty">Belum ada lagu</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" class="empty">Belum ada lagu</td></tr>';
         return;
     }
     tbody.innerHTML = data.map(l => `<tr>
@@ -1111,8 +1332,191 @@ window.deleteLagu = (id, title) => {
 
 $('#btn-cancel-lagu').onclick = () => $('#modal-lagu').classList.remove('show');
 
+/* =====================================================
+   TEMA UNDANGAN
+   ===================================================== */
+const BUILTIN_THEMES = window.WEDDING_THEMES || {};
+
+function getCurrentWeddingValue() {
+    try { return JSON.parse($('#json-editor').value || '{}'); }
+    catch { return null; }
+}
+
+async function getWeddingValue() {
+    const local = getCurrentWeddingValue();
+    const localValid = local && Object.keys(local).length > 0;
+    if (localValid) return local;
+    if (!db) return null;
+    const { data } = await db.from('settings').select('value').eq('key','wedding').single();
+    return data?.value || null;
+}
+
+async function saveWeddingValue(value, okMsg) {
+    if (!db) return showToast('DB tidak tersedia');
+    const { error } = await db.from('settings')
+        .update({ value, updated_at: new Date().toISOString() })
+        .eq('key','wedding');
+    if (error) return showToast('Gagal simpan: ' + error.message);
+    $('#json-editor').value = JSON.stringify(value, null, 2);
+    $('#json-status').className = 'json-status ok';
+    $('#json-status').textContent = 'Tersimpan! Data wedding berhasil diupdate.';
+    showToast(okMsg || 'Perubahan tersimpan');
+}
+
+let selectedTheme = null; // { id, mode } — tema yang sedang dipilih di dropdown
+
+async function loadThemeList() {
+    populateThemePreview();
+}
+
+function themeName(id, w) {
+    const kustom = (w?.tema?.kustom) || [];
+    const c = kustom.find(x => x.id === id);
+    if (c) return c.nama;
+    if (BUILTIN_THEMES[id]) return BUILTIN_THEMES[id].nama;
+    return id;
+}
+
+async function applyTheme(id) {
+    const w = await getWeddingValue();
+    if (!w) return showToast('Gagal membaca data wedding');
+    w.tema = w.tema || { aktif: 'royal-gold', kustom: [] };
+    w.tema.aktif = id;
+    await saveWeddingValue(w, 'Tema diterapkan: ' + themeName(id, w));
+    loadThemeList();
+}
+
+const THEME_VARS_TEMPLATE = {
+    "--cream":         "#faf6ef",
+    "--cream-dark":    "#f1e8da",
+    "--white":         "#fffdf9",
+    "--accent":        "#b98e52",
+    "--accent-dark":   "#97702f",
+    "--accent-light":  "#d9b878",
+    "--brown":         "#4a3b2f",
+    "--brown-soft":    "#7a6a5c",
+    "--deep-1":        "#33281f",
+    "--deep-2":        "#171008",
+    "--danger":        "#c0392b"
+};
+
+const THEME_GAYA_DEFAULT = { font: 'classic', ornament: 'dove', shape: 'soft', cover: 'center', texture: 'plain' };
+const THEME_GAYA_KEYS    = ['font', 'ornament', 'shape', 'cover', 'texture'];
+
+function setThemeGayaSelects(gaya) {
+    const g = Object.assign({}, THEME_GAYA_DEFAULT, gaya || {});
+    THEME_GAYA_KEYS.forEach(k => {
+        const sel = $('#theme-gaya-' + k);
+        if (sel) sel.value = g[k] || THEME_GAYA_DEFAULT[k];
+    });
+}
+
+function openThemeModal(id) {
+    $('#theme-modal-title').textContent = id ? 'Edit Tema Kustom' : 'Tambah Tema Kustom';
+    $('#theme-edit-id').value = id || '';
+    $('#theme-name').value = '';
+    $('#theme-vars').value = JSON.stringify(THEME_VARS_TEMPLATE, null, 2);
+    setThemeGayaSelects(THEME_GAYA_DEFAULT);
+    if (id) {
+        getWeddingValue().then(w => {
+            const c = (w?.tema?.kustom || []).find(x => x.id === id);
+            if (c) {
+                $('#theme-name').value = c.nama || '';
+                if (c.vars) $('#theme-vars').value = JSON.stringify(c.vars, null, 2);
+                setThemeGayaSelects(c.gaya);
+            }
+        });
+    }
+    $('#modal-theme').classList.add('show');
+    $('#theme-name').focus();
+}
+
+$('#btn-add-theme').onclick = () => openThemeModal('');
+$('#btn-cancel-theme').onclick = () => $('#modal-theme').classList.remove('show');
+
+
+$('#btn-save-theme').onclick = async () => {
+    const id = $('#theme-edit-id').value;
+    const nama = $('#theme-name').value.trim();
+    let vars;
+    try { vars = JSON.parse($('#theme-vars').value || '{}'); }
+    catch (e) { return showToast('Format warna tidak valid: ' + e.message); }
+
+    if (!nama) return showToast('Nama tema wajib diisi');
+    if (!vars || typeof vars !== 'object' || Array.isArray(vars)) return showToast('Variabel warna wajib berupa objek JSON');
+    if (Object.keys(vars).length === 0) return showToast('Isi minimal satu variable warna');
+
+    const gaya = {};
+    THEME_GAYA_KEYS.forEach(k => gaya[k] = $('#theme-gaya-' + k).value || THEME_GAYA_DEFAULT[k]);
+
+    const w = await getWeddingValue();
+    if (!w) return showToast('Gagal membaca data wedding');
+    w.tema = w.tema || { aktif: 'royal-gold', kustom: [] };
+    w.tema.kustom = Array.isArray(w.tema.kustom) ? w.tema.kustom : [];
+
+    if (id) {
+        const i = w.tema.kustom.findIndex(x => x.id === id);
+        if (i >= 0) { w.tema.kustom[i].nama = nama; w.tema.kustom[i].vars = vars; w.tema.kustom[i].gaya = gaya; }
+    } else {
+        w.tema.kustom.push({ id: 'kustom-' + Date.now().toString(36), nama, vars, gaya });
+    }
+
+    $('#modal-theme').classList.remove('show');
+    await saveWeddingValue(w, 'Tema tersimpan');
+    loadThemeList();
+};
+
+function deleteTheme(id) {
+    showConfirm('Hapus Tema?', 'Tema kustom ini akan dihapus permanen.', async () => {
+        const w = await getWeddingValue();
+        if (!w) return showToast('Gagal membaca data wedding');
+        w.tema = w.tema || { aktif: 'royal-gold', kustom: [] };
+        w.tema.kustom = (w.tema.kustom || []).filter(x => x.id !== id);
+        if (w.tema.aktif === id) w.tema.aktif = 'royal-gold';
+        await saveWeddingValue(w, 'Tema kustom dihapus');
+        loadThemeList();
+    });
+}
+
+function getSelectedTheme() {
+    const sel = $('#theme-preview-select');
+    const opt = sel?.selectedOptions?.[0];
+    if (!opt || !opt.value) return null;
+    return { id: opt.value, mode: opt.dataset.mode || '' };
+}
+
+$('#btn-apply-selected').onclick = () => {
+    const t = getSelectedTheme();
+    if (t) applyTheme(t.id);
+};
+$('#btn-preview-selected').onclick = () => {
+    const t = getSelectedTheme();
+    if (t) {
+        const src = t.mode === 'v2'
+            ? 'tema-v2/' + encodeURIComponent(t.id) + '.html'
+            : 'index.html?tema=' + encodeURIComponent(t.id);
+        window.open(src, '_blank');
+    }
+};
+$('#btn-edit-selected').onclick = () => {
+    const t = getSelectedTheme();
+    if (t && t.mode === 'kustom') openThemeModal(t.id);
+};
+$('#btn-delete-selected').onclick = () => {
+    const t = getSelectedTheme();
+    if (t && t.mode === 'kustom') deleteTheme(t.id);
+};
+
+$$('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (btn.dataset.tab === 'tema') loadThemeList();
+    });
+});
+
 // Initialize Map Pickers
-let akadMap = null, akadMarker = null, resepsiMap = null, resepsiMarker = null;
+let akadMap = null, resepsiMap = null;
+let mapObjs = { akad: null, resepsi: null };
+let searchDebounce = { akad: null, resepsi: null };
 
 function setEditorField(path, value) {
     try {
@@ -1128,77 +1532,158 @@ function setEditorField(path, value) {
     } catch (e) { /* abaikan jika JSON belum valid */ }
 }
 
-function initAkadMap() {
-    akadMap = L.map('akad-map').setView([-6.911521, 109.649375], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(akadMap);
+function getEditorField(path) {
+    try {
+        const obj = JSON.parse($('#json-editor').value || '{}');
+        const parts = path.split('.');
+        let node = obj;
+        for (const p of parts) {
+            if (node == null) return null;
+            node = node[p];
+        }
+        return node;
+    } catch { return null; }
+}
 
-    akadMarker = L.marker([-6.911521, 109.649375]).addTo(akadMap)
-        .bindPopup('Lokasi Akad').openPopup();
+function initMap(mapId, label, latPath, lngPath, tempatPath, alamatPath) {
+    const id = label.toLowerCase(); // 'akad' | 'resepsi'
+    const defaultLat = -6.911521, defaultLng = 109.649375;
+    const map = L.map(mapId).setView([defaultLat, defaultLng], 15);
 
-    akadMap.on('click', function (e) {
-        const lat = e.latlng.lat.toFixed(6);
-        const lng = e.latlng.lng.toFixed(6);
-        akadMarker.setLatLng([lat, lng]);
-        setEditorField('akad.lat', lat);
-        setEditorField('akad.lng', lng);
-        showToast('Koordinat Akad: ' + lat + ', ' + lng);
+    // Base layers (seperti proyek GIS: OSM, Satelit, Terrain)
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19, attribution: '&copy; OpenStreetMap'
     });
+    const satelit = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19, attribution: '&copy; Esri'
+    });
+    const terrain = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17, attribution: '&copy; OpenTopoMap'
+    });
+
+    L.control.layers({
+        'OpenStreetMap': osm,
+        'Satelit': satelit,
+        'Terrain': terrain
+    }, null, { position: 'topright', collapsed: false }).addTo(map);
+
+    osm.addTo(map);
+
+    const savedLat = parseFloat(getEditorField(latPath)) || defaultLat;
+    const savedLng = parseFloat(getEditorField(lngPath)) || defaultLng;
+
+    const marker = L.marker([savedLat, savedLng], { draggable: true }).addTo(map)
+        .bindPopup(`<b>${label}</b><br>Seret untuk pindah`).openPopup();
+
+    function fillInfo(lat, lng) {
+        $(`#${id}-info-coords`).textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    }
+
+    async function reverseGeocode(lat, lng) {
+        try {
+            const res = await fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&zoom=18&accept-language=id,en', {
+                headers: { 'Accept-Language': 'id,en', 'User-Agent': 'WeddingAdmin/1.0' }
+            });
+            const d = await res.json();
+            const name = d?.name || d?.address?.amenity || d?.address?.building || d?.address?.road || label;
+            const address = d?.display_name || '';
+            return { name, address };
+        } catch { return { name: label, address: '' }; }
+    }
+
+    async function update(lat, lng) {
+        marker.setLatLng([lat, lng]);
+        marker.getPopup().setContent(`<b>${label}</b><br>Lat: ${lat.toFixed(6)}`);
+        setEditorField(latPath, lat.toFixed(6));
+        setEditorField(lngPath, lng.toFixed(6));
+        fillInfo(lat, lng);
+        const geo = await reverseGeocode(lat, lng);
+        $('#' + id + '-tempat').value = geo.name;
+        $('#' + id + '-alamat').value = geo.address;
+        $('#' + id + '-info-name').textContent = geo.name;
+        $('#' + id + '-info-address').textContent = geo.address;
+        setEditorField(tempatPath, geo.name);
+        setEditorField(alamatPath, geo.address);
+    }
+
+    marker.on('dragend', e => { update(e.target.getLatLng().lat, e.target.getLatLng().lng); showToast(`${label}: ${e.target.getLatLng().lat.toFixed(6)}, ${e.target.getLatLng().lng.toFixed(6)}`); });
+    map.on('click', e => { update(e.latlng.lat, e.latlng.lng); showToast(`${label}: ${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}`); });
+
+    // Kontrol sehingga nilai dari field editable ikut masuk JSON + box info
+    $('#' + id + '-tempat').addEventListener('input', () => {
+        setEditorField(tempatPath, $('#' + id + '-tempat').value);
+        $('#' + id + '-info-name').textContent = $('#' + id + '-tempat').value || label;
+    });
+    $('#' + id + '-alamat').addEventListener('input', () => {
+        setEditorField(alamatPath, $('#' + id + '-alamat').value);
+        $('#' + id + '-info-address').textContent = $('#' + id + '-alamat').value || '';
+    });
+
+    // Isi awal dari data tersimpan
+    const savedTempat = getEditorField(tempatPath);
+    const savedAlamat = getEditorField(alamatPath);
+    if (savedTempat && $('#' + id + '-tempat').value !== savedTempat) $('#' + id + '-tempat').value = savedTempat;
+    if (savedAlamat && $('#' + id + '-alamat').value !== savedAlamat) $('#' + id + '-alamat').value = savedAlamat;
+    $('#' + id + '-info-name').textContent = savedTempat || label;
+    $('#' + id + '-info-address').textContent = savedAlamat || '';
+    fillInfo(savedLat, savedLng);
+
+    return { map, update };
+}
+
+function initAkadMap() {
+    if (akadMap) { akadMap.invalidateSize(); return; }
+    mapObjs.akad = initMap('akad-map', 'Akad', 'akad.lat', 'akad.lng', 'akad.tempat', 'akad.alamat');
+    akadMap = mapObjs.akad.map;
 }
 
 function initResepsiMap() {
-    resepsiMap = L.map('resepsi-map').setView([-6.911521, 109.649375], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(resepsiMap);
-
-    resepsiMarker = L.marker([-6.911521, 109.649375]).addTo(resepsiMap)
-        .bindPopup('Lokasi Resepsi').openPopup();
-
-    resepsiMap.on('click', function (e) {
-        const lat = e.latlng.lat.toFixed(6);
-        const lng = e.latlng.lng.toFixed(6);
-        resepsiMarker.setLatLng([lat, lng]);
-        setEditorField('resepsi.latitude', lat);
-        setEditorField('resepsi.longitude', lng);
-        showToast('Koordinat Resepsi: ' + lat + ', ' + lng);
-    });
+    if (resepsiMap) { resepsiMap.invalidateSize(); return; }
+    mapObjs.resepsi = initMap('resepsi-map', 'Resepsi', 'resepsi.latitude', 'resepsi.longitude', 'resepsi.tempat', 'resepsi.alamat');
+    resepsiMap = mapObjs.resepsi.map;
 }
 
-async function searchAndPlace(map, marker, inputId, pathLat, pathLng, label) {
+async function searchAndPlace(inputId, latPath, lngPath, label) {
     const address = $('#' + inputId).value.trim();
     if (!address) return showToast('Masukkan alamat terlebih dahulu');
 
-    try {
-        const res = await fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address));
-        const data = await res.json();
-        if (data && data.length) {
-            const lat = parseFloat(data[0].lat).toFixed(6);
-            const lng = parseFloat(data[0].lon).toFixed(6);
-            map.setView([lat, lng], 15);
-            marker.setLatLng([lat, lng]);
-            setEditorField(pathLat, lat);
-            setEditorField(pathLng, lng);
-            showToast(label + ' ditemukan');
-        } else {
-            showToast('Alamat tidak ditemukan');
-        }
-    } catch {
-        showToast('Gagal mencari alamat');
-    }
+    clearTimeout(searchDebounce[inputId.replace('-address', '')]);
+    searchDebounce[inputId.replace('-address', '')] = setTimeout(async () => {
+        try {
+            const res = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(address), {
+                headers: { 'Accept-Language': 'id,en', 'User-Agent': 'WeddingAdmin/1.0' }
+            });
+            const data = await res.json();
+            if (data?.length) {
+                const lat = parseFloat(data[0].lat), lng = parseFloat(data[0].lon);
+                if (label === 'Akad') initAkadMap(); else initResepsiMap();
+                const ctrl = label === 'Akad' ? mapObjs.akad : mapObjs.resepsi;
+                if (ctrl) { ctrl.map.setView([lat, lng], 16); ctrl.update(lat, lng); showToast(`${label}: ${data[0].display_name.substring(0, 60)}...`); }
+            } else showToast('Alamat tidak ditemukan');
+        } catch { showToast('Gagal mencari alamat'); }
+    }, 300);
 }
 
-$('#akad-search-btn').onclick = () => {
-    if (!akadMap) initAkadMap();
-    akadMap.invalidateSize();
-    searchAndPlace(akadMap, akadMarker, 'akad-address', 'akad.lat', 'akad.lng', 'Alamat Akad');
-};
-$('#resepsi-search-btn').onclick = () => {
-    if (!resepsiMap) initResepsiMap();
-    resepsiMap.invalidateSize();
-    searchAndPlace(resepsiMap, resepsiMarker, 'resepsi-address', 'resepsi.latitude', 'resepsi.longitude', 'Alamat Resepsi');
-};
+$('#akad-search-btn').onclick = () => searchAndPlace('akad-address', 'akad.lat', 'akad.lng', 'Akad');
+$('#resepsi-search-btn').onclick = () => searchAndPlace('resepsi-address', 'resepsi.latitude', 'resepsi.longitude', 'Resepsi');
+
+// Debounced input search
+$('#akad-address').addEventListener('input', () => {
+    clearTimeout(searchDebounce.akad);
+    searchDebounce.akad = setTimeout(() => {
+        if ($('#akad-address').value.length > 3) {
+            $('#akad-search-btn').click();
+        }
+    }, 500);
+});
+$('#resepsi-address').addEventListener('input', () => {
+    clearTimeout(searchDebounce.resepsi);
+    searchDebounce.resepsi = setTimeout(() => {
+        if ($('#resepsi-address').value.length > 3) {
+            $('#resepsi-search-btn').click();
+        }
+    }, 500);
+});
 
 // Inisialisasi peta saat tab Settings dibuka (agar ukurannya terhitung)
 $$('.tab-btn').forEach(btn => {
@@ -1206,7 +1691,7 @@ $$('.tab-btn').forEach(btn => {
         if (btn.dataset.tab !== 'settings') return;
         // Tunggu hingga panel settings benar-benar terlihat
         setTimeout(() => {
-            if (typeof L === 'undefined') {
+if (typeof L === 'undefined') {
                 console.error('Leaflet belum dimuat');
                 return;
             }
@@ -1228,6 +1713,103 @@ $$('.tab-btn').forEach(btn => {
         }, 300);
     });
 });
+
+/* =====================================================
+   PRATINJAU INLINE (tanpa tab baru)
+   ===================================================== */
+function populateThemePreview() {
+    const sel = $('#theme-preview-select');
+    if (!sel) return;
+    getWeddingValue().then(w => {
+        const tema = w?.tema || { aktif: 'royal-gold', kustom: [] };
+        const kustom = Array.isArray(tema.kustom) ? tema.kustom : [];
+
+        // 1) Tema bawaan (builtins) dari themes.js
+        const builtinArr = Object.entries(BUILTIN_THEMES).map(([id, th]) => ({ id, nama: th.nama, mode: 'builtin' }));
+        // 2) Template v2 (tema-v2/*.html) — ditambahkan secara manual
+        const v2arr = [
+            { id: 'royal-gold',        nama: 'Royal Gold — Nito & Lusi' },
+            { id: 'midnight-navy',     nama: 'Midnight Navy — Aldo & Nadin' },
+            { id: 'sage-garden',       nama: 'Sage Garden — Rangga & Salsa' },
+            { id: 'champagne-classic', nama: 'Champagne Classic — Gilang & Aira' },
+            { id: 'forest-emerald',    nama: 'Forest Emerald — Bimo & Elsa' }
+        ].map(v => ({ id: v.id, nama: v.nama, mode: 'v2' }));
+        const v2ids = new Set(v2arr.map(v => v.id));
+        const builtins = builtinArr.filter(b => !v2ids.has(b.id));
+        // 3) Tema kustom dari DB
+        const customs = kustom.map(k => ({ id: k.id, nama: k.nama, mode: 'kustom' }));
+
+        const optgroup = (label, items) => items.length
+            ? `<optgroup label="${esc(label)}">${items.map(o =>
+                `<option value="${esc(o.id)}" data-mode="${o.mode}">${esc(o.nama)}</option>`).join('')}</optgroup>`
+            : '';
+
+        sel.innerHTML = '<option value="">— Pilih tema undangan —</option>' +
+            optgroup('Tema Bawaan (Preset)', builtins) +
+            optgroup('Template V2', v2arr) +
+            optgroup('Tema Kustom', customs);
+
+        // pilih tema yang sedang dipilih, atau tema aktif
+        const wantId = (selectedTheme && [...sel.options].some(o => o.value === selectedTheme.id))
+            ? selectedTheme.id : tema.aktif;
+        const opt = [...sel.options].find(o => o.value === wantId);
+        if (opt) sel.value = opt.value;
+        reflectThemeSelection();
+        updateActiveNote(tema.aktif);
+        if (opt) setThemePreview(opt.dataset.mode, opt.value);
+    });
+}
+
+function reflectThemeSelection() {
+    const sel = $('#theme-preview-select');
+    if (!sel) return;
+    const opt = sel.selectedOptions[0];
+    const b = $('#btn-apply-selected');
+    const p = $('#btn-preview-selected');
+    const e = $('#btn-edit-selected');
+    const d = $('#btn-delete-selected');
+    if (!opt || !opt.value) {
+        selectedTheme = null;
+        if (b) b.disabled = true;
+        if (p) p.hidden = true;
+        if (e) e.hidden = true;
+        if (d) d.hidden = true;
+        return;
+    }
+    selectedTheme = { id: opt.value, mode: opt.dataset.mode };
+    if (b) b.disabled = false;
+    if (p) p.hidden = false;
+    if (e) e.hidden = selectedTheme.mode !== 'kustom';
+    if (d) d.hidden = selectedTheme.mode !== 'kustom';
+}
+
+function updateActiveNote(id) {
+    const n = $('#theme-active-note');
+    if (!n) return;
+    getWeddingValue().then(w => {
+        n.innerHTML = '<i class="fas fa-toggle-on" style="color:var(--gold)"></i> Tema aktif: <b>' + esc(themeName(id, w)) + '</b>';
+    });
+}
+
+function setThemePreview(mode, id) {
+    const frame = $('#theme-preview-frame');
+    if (!frame) return;
+    const src = mode === 'v2'
+        ? 'tema-v2/' + encodeURIComponent(id) + '.html'
+        : 'index.html?tema=' + encodeURIComponent(id);
+    frame.src = src;
+}
+
+$('#theme-preview-select')?.addEventListener('change', e => {
+    const opt = e.target.selectedOptions[0];
+    if (!opt || !opt.value) { reflectThemeSelection(); return; }
+    reflectThemeSelection();
+    setThemePreview(opt.dataset.mode, opt.value);
+    const box = $('#theme-live-preview');
+    if (box) box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+populateThemePreview();
 
 }); // End DOMContentLoaded
 </script>
