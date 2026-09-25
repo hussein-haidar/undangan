@@ -184,10 +184,23 @@ async function loadBackgroundMusic() {
             .limit(1)
             .maybeSingle();
 
-        if (!error && data?.file_url) {
+        if (error) return;
+
+        if (data?.file_url) {
             music.src = data.file_url;
             music.title = data.title || 'Background Music';
+            return;
         }
+
+        // Tabel lagu kosong: daftarkan lagu bawaan template agar ikut tampil di CRUD lagu
+        const defSrc = music.getAttribute('src') || '';
+        if (!defSrc) return;
+        const defTitle = defSrc.split('/').pop();
+        const absUrl = new URL(defSrc, location.href).pathname;
+        const { error: insErr } = await db.from('lagu').insert({ title: defTitle, file_url: absUrl });
+        if (insErr) return;
+        music.src = absUrl;
+        music.title = defTitle;
     } catch (err) {
         console.warn('Gagal memuat lagu dari database, menggunakan default:', err);
     }
