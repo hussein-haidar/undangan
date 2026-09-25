@@ -1395,10 +1395,10 @@ async function loadLagu() {
     }
     tbody.innerHTML = data.map(l => `<tr>
         <td><strong>${esc(l.title)}</strong></td>
-        <td style="font-size:.78rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(l.file_url || l.file_name || '-')}</td>
+        <td style="font-size:.78rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(l.url || l.file_name || '-')}</td>
         <td style="font-size:.78rem;color:var(--brown-soft)">${waktuLalu(l.created_at)}</td>
         <td class="actions">
-            <button class="btn btn-ghost btn-sm" onclick="editLagu(${l.id},'${esc(l.title)}','${esc(l.file_url || '')}','${esc(l.file_name || '')}')"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-ghost btn-sm" onclick="editLagu(${l.id},'${esc(l.title)}','${esc(l.url || '')}','${esc(l.file_name || '')}')"><i class="fas fa-edit"></i></button>
             <button class="btn btn-red" onclick="deleteLagu(${l.id},'${esc(l.title)}')"><i class="fas fa-trash"></i></button>
         </td>
     </tr>`).join('');
@@ -1460,14 +1460,14 @@ $('#btn-save-lagu').onclick = async () => {
     
     if (id) {
         const updateData = { title };
-        if (fileUrl) updateData.file_url = fileUrl;
+        if (fileUrl) updateData.url = fileUrl;
         if (fileName) updateData.file_name = fileName;
         
         const { error } = await db.from('lagu').update(updateData).eq('id', id);
         if (error) return showToast('Gagal update: ' + error.message);
         showToast('Lagu berhasil diupdate');
     } else {
-        const { error } = await db.from('lagu').insert({ title, file_name: fileName, file_url: fileUrl });
+        const { error } = await db.from('lagu').insert({ title, file_name: fileName, url: fileUrl });
         if (error) return showToast('Gagal tambah: ' + error.message);
         showToast('Lagu berhasil ditambahkan');
     }
@@ -1490,6 +1490,67 @@ window.deleteLagu = (id, title) => {
 };
 
 $('#btn-cancel-lagu').onclick = () => $('#modal-lagu').classList.remove('show');
+
+/* =====================================================
+   AREA UPLOAD LAGU (drag & drop) di atas tabel
+   ===================================================== */
+const laguFileInput = $('#lagu-file-input');
+const laguUploadArea = $('#lagu-upload-area');
+
+$('#lagu-file-trigger').addEventListener('click', e => { e.preventDefault(); laguFileInput.click(); });
+
+['dragover', 'drop'].forEach(ev =>
+    laguUploadArea.addEventListener(ev, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (ev !== 'drop') return;
+        if (e.dataTransfer.files.length) {
+            laguFileInput.files = e.dataTransfer.files;
+            laguFileInput.dispatchEvent(new Event('change'));
+        }
+    })
+);
+
+laguFileInput.addEventListener('change', () => {
+    const f = laguFileInput.files[0];
+    if (!f) return;
+    $('#preview-title').textContent = f.name;
+    $('#preview-size').textContent = (f.size / (1024 * 1024)).toFixed(2) + ' MB';
+    $('#lagu-upload-preview').hidden = false;
+});
+
+$('#lagu-cancel-upload').onclick = () => {
+    laguFileInput.value = '';
+    $('#lagu-url-input').value = '';
+    $('#lagu-upload-preview').hidden = true;
+};
+
+$('#lagu-confirm-upload').onclick = async () => {
+    const file = laguFileInput.files[0];
+    const urlInput = $('#lagu-url-input').value.trim();
+    if (!file && !urlInput) return showToast('Pilih file MP3 atau isi URL lagu');
+
+    let fileName = '';
+    let fileUrl = urlInput;
+    if (file) {
+        if (!file.type.includes('audio') && !file.name.endsWith('.mp3')) return showToast('Hanya file MP3 yang diperbolehkan');
+        const ext = file.name.split('.').pop() || 'mp3';
+        const safeName = `${Date.now()}_${file.name.replace(/[^a-z0-9]/gi, '_').slice(0, 60)}.${ext}`;
+        const { error: upErr } = await db.storage.from('lagu').upload(safeName, file, { cacheControl: '3600', upsert: false });
+        if (upErr) return showToast('Gagal upload file: ' + upErr.message);
+        fileName = safeName;
+        fileUrl = db.storage.from('lagu').getPublicUrl(safeName).data.publicUrl;
+    }
+
+    const title = (file ? file.name : urlInput.split('/').pop() || 'Lagu').replace(/\.mp3$/i, '');
+    const { error } = await db.from('lagu').insert({ title, file_name: fileName, url: fileUrl });
+    if (error) return showToast('Gagal tambah: ' + error.message);
+    showToast('Lagu berhasil ditambahkan: ' + title);
+    laguFileInput.value = '';
+    $('#lagu-url-input').value = '';
+    $('#lagu-upload-preview').hidden = true;
+    loadLagu();
+};
 
 /* =====================================================
    TEMA UNDANGAN

@@ -179,15 +179,15 @@ async function loadBackgroundMusic() {
     try {
         const { data, error } = await db
             .from('lagu')
-            .select('file_url, title')
+            .select('url, title')
             .order('id', { ascending: true })
             .limit(1)
             .maybeSingle();
 
         if (error) return;
 
-        if (data?.file_url) {
-            music.src = data.file_url;
+        if (data?.url) {
+            music.src = data.url;
             music.title = data.title || 'Background Music';
             return;
         }
@@ -197,7 +197,7 @@ async function loadBackgroundMusic() {
         if (!defSrc) return;
         const defTitle = defSrc.split('/').pop();
         const absUrl = new URL(defSrc, location.href).pathname;
-        const { error: insErr } = await db.from('lagu').insert({ title: defTitle, file_url: absUrl });
+        const { error: insErr } = await db.from('lagu').insert({ title: defTitle, file_name: '', url: absUrl });
         if (insErr) return;
         music.src = absUrl;
         music.title = defTitle;
